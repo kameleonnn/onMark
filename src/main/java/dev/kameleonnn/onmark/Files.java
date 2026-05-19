@@ -33,7 +33,7 @@ public class Files {
     } 
     
     /**
-     * Reads contents of file line after line and generates database contents ('Database.task')
+     * Reads contents of file line after line
      * @param filename
      * @throws IOException if file cannot be read
      */
@@ -42,7 +42,7 @@ public class Files {
             String line;
             while((line=dataRead.readLine())!=null){
                 if(!line.equals("")){
-                    App.data.concat(line);
+                    App.data = App.data + line+"\n"; //zepsute do data jest static
                 }
             }
         }
@@ -55,16 +55,13 @@ public class Files {
      * @return true after completing method
      * @throws IOException
      */
-    public static boolean save(String data, String filename) throws IOException{
+    public static void save(String data, String filename) throws IOException{
 	clearFile(filename);
-        try (BufferedWriter dataWrite = new BufferedWriter(new FileWriter(filename,false))) {
+        try (BufferedWriter dataWrite = new BufferedWriter(new FileWriter(filename))) {
             for(int i=0;i<data.length();i++){
-                if(!data.equals("")){
-                    dataWrite.write(data);
-                    dataWrite.flush();
-                }
+                    dataWrite.write(data.charAt(i));
             }
-            return true;
+            App.saved = true;
         }
     }  
     
@@ -76,6 +73,11 @@ public class Files {
      */
     public static BufferedReader checkIfFileCanOpen(String filename) throws IOException{
         return new BufferedReader(new FileReader(filename)); 
+    }
+
+    public static void closeFile(){
+        App.data = "";
+        App.filename = "";
     }
 
 }
