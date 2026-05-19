@@ -8,6 +8,17 @@ at your disposal is a graphic interface for most markdown formatting with custom
 
 onMark is written in Java using the JavaFX GUI framework, with plans of a version written in C/C++ using WxGTK
 
+### Progress tracker
+- [x] file handling
+- [ ] basic text editor functionality
+- [ ] edit menu/button functionality
+- [ ] editor interface
+- [ ] zoom
+- [ ] settings
+- [ ] markdown rendering
+- [ ] rich editor / editor switching
+- [ ] themes
+
 ## Installation
 
 clone this repository:  
