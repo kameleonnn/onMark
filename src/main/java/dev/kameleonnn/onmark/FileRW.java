@@ -6,12 +6,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  *
  * @author kameleonnn
  */
-public class Files {
+public class FileRW {
+
+    public FileRW(File file) {
+    }
     
     /**
      * Creates new file from default values
@@ -38,7 +42,7 @@ public class Files {
      * @throws IOException if file cannot be read
      */
     public static void readFile(String filename) throws IOException{
-        try (BufferedReader dataRead = checkIfFileCanOpen(filename)) {
+        try (BufferedReader dataRead = new BufferedReader( new FileReader(filename))) {
             String line;
             while((line=dataRead.readLine())!=null){
                 if(!line.equals("")){
@@ -52,7 +56,6 @@ public class Files {
      * Saves contents of given string to file with given filename line by line
      * @param data string to be written to file
      * @param filename file to be written to
-     * @return true after completing method
      * @throws IOException
      */
     public static void save(String data, String filename) throws IOException{
@@ -71,8 +74,8 @@ public class Files {
      * @return BufferedReader on success
      * @throws IOException
      */
-    public static BufferedReader checkIfFileCanOpen(String filename) throws IOException{
-        return new BufferedReader(new FileReader(filename)); 
+    public static boolean checkIfFileCanOpen(String filename) throws IOException{
+        return Files.isReadable(new File(filename).toPath()); 
     }
 
     public static void closeFile(){

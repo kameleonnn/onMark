@@ -18,7 +18,7 @@ import javafx.stage.WindowEvent;
  * JavaFX App
  */
 public class App extends Application {
-    static String fxml = "MainWin.fxml";
+    static String fxml = "fxml/MainWin.fxml";
     public static Scene scene;
     public static String filename = "";
     public static String data = "";
@@ -49,7 +49,6 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        setRoot(fxml);
         stage.setScene(scene);
         stage.setTitle("onMark");
         stage.show();
@@ -57,10 +56,6 @@ public class App extends Application {
             saveCheck();
             if (saved) { Platform.exit(); }
         });
-    }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
     }
 
     /**
@@ -82,8 +77,8 @@ public class App extends Application {
             Optional<ButtonType> option = savePrompt.showAndWait();
             if (option.get() == ButtonType.YES) {
                 try {
-                    Files.save(App.data, App.filename);
-                    Files.closeFile();
+                    FileRW.save(App.data, App.filename);
+                    FileRW.closeFile();
 
                 } catch (IOException ex) {
                     Alert error = new Alert(Alert.AlertType.ERROR);
@@ -93,7 +88,7 @@ public class App extends Application {
                 }
             }
             if (option.get() == ButtonType.NO) {
-                Files.closeFile();
+                FileRW.closeFile();
                 saved = true;
             }
             if(option.get()==ButtonType.CANCEL){ saved = false;}
