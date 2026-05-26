@@ -55,6 +55,7 @@ public class MainWinController implements Initializable {
     private Menu menuHelp;
     @FXML
     private AnchorPane editorContPane;
+    private EditorController editor;
 
     /**
      * Initializes the controller class.
@@ -83,12 +84,10 @@ public class MainWinController implements Initializable {
                         FileRW.readFile(App.filename);
                         menuEdit.setDisable(false);
                         changeRecents();
+                        editor.loadFileConts();
                     } else {
                         App.errorAlert(Strings.FILE_OPEN_ERROR.text);
                     }
-                    
-                    // TODO
-                    //App.data wysłać do edytora - osobny kontroler
                 } catch (IOException ex) {
                     App.errorAlert(Strings.FILE_LOAD_ERROR.text);
                     System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -103,9 +102,8 @@ public class MainWinController implements Initializable {
                 if (App.saved) {
                     changeRecents();
                     menuEdit.setDisable(true);
+                    editor.clearEditor();
                 }
-                // TODO
-                // clear editor
             }
         }));
 
@@ -137,8 +135,7 @@ public class MainWinController implements Initializable {
                 if (App.saved) {
                     fileChooser.setTitle("New file...");
                     saveInNewFile();
-                    // TODO
-                    //clear editor
+                    editor.clearEditor();
                 }
             }
         }));
@@ -206,5 +203,7 @@ public class MainWinController implements Initializable {
     public void editorSet() throws IOException{
         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/Editor.fxml"));
         editorContPane.getChildren().setAll((Node) loader.load());
+        editor = (EditorController) loader.getController();
+        editor.setupRespSize(editorContPane);
     }    
 }
