@@ -20,35 +20,49 @@ public class FileRW {
     /**
      * Creates new file from default values
      * @param filename string
-     * @return 'true' if file was created successfully, 'false' on failure
-     * @throws IOException if file stream cannot be created
+     * @return 'true' if file was created successfully
      */
-    public boolean createFile(String filename) throws IOException{
-        return new File(filename).createNewFile();
+    public boolean createFile(String filename){
+        try {
+            return new File(filename).createNewFile();
+        } catch (IOException ex) {
+            System.getLogger(FileRW.class.getName()).log(System.Logger.Level.ERROR, Strings.FILE_CREATE_ERROR.text, ex);
+            return false;
+        }
     }
     
     /**
      * Clear contents of given file
      * @param filename string
-     * @throws IOException
+     * @return 'true' on success,  'false' on failure
      */
-    public static void clearFile(String filename) throws IOException{
-	new BufferedWriter(new FileWriter(filename, false)).close();
+    public static boolean clearFile(String filename) {
+        try {
+            new BufferedWriter(new FileWriter(filename, false)).close();
+            return true;
+        } catch (IOException ex) {
+            System.getLogger(FileRW.class.getName()).log(System.Logger.Level.ERROR, Strings.FILE_ERROR.text, ex);
+            return false;
+        }
     } 
     
     /**
      * Reads contents of file line after line
      * @param filename
-     * @throws IOException if file cannot be read
+     * @return 'true' if entire file was read successfully
      */
-    public static void readFile(String filename) throws IOException{
+    public static boolean readFile(String filename){
         try (BufferedReader dataRead = new BufferedReader( new FileReader(filename))) {
             String line;
             while((line=dataRead.readLine())!=null){
                 if(!line.equals("")){
-                    App.data = App.data + line+"\n"; //zepsute do data jest static
+                    App.data = App.data + line+"\n";
                 }
             }
+            return true;
+        } catch (IOException ex) {
+            System.getLogger(FileRW.class.getName()).log(System.Logger.Level.ERROR, Strings.FILE_OPEN_ERROR.text, ex);
+            return false;
         }
     }
     
@@ -56,28 +70,33 @@ public class FileRW {
      * Saves contents of given string to file with given filename line by line
      * @param data string to be written to file
      * @param filename file to be written to
-     * @throws IOException
+     * @return 'true' if file was saved successfully
      */
-    public static void save(String data, String filename) throws IOException{
+    public static boolean save(String data, String filename){
 	clearFile(filename);
         try (BufferedWriter dataWrite = new BufferedWriter(new FileWriter(filename))) {
             for(int i=0;i<data.length();i++){
                     dataWrite.write(data.charAt(i));
             }
-            App.saved = true;
+            return App.saved=true;
+        } catch (IOException ex) {
+            System.getLogger(FileRW.class.getName()).log(System.Logger.Level.ERROR, Strings.FILE_SAVE_ERROR.text, ex);
+            return false;
         }
     }  
     
     /**
      * checks if file with given filename can be opened
      * @param filename string
-     * @return BufferedReader on success
-     * @throws IOException
+     * @return 'true' if file is readable
      */
-    public static boolean checkIfFileCanOpen(String filename) throws IOException{
+    public static boolean checkIfFileCanOpen(String filename){
         return Files.isReadable(new File(filename).toPath()); 
     }
 
+    /**
+     * closes currently opened file
+     */
     public static void closeFile(){
         App.data = "";
         App.filename = "";

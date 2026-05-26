@@ -54,6 +54,7 @@ public class MainWinController implements Initializable {
     @FXML
     private AnchorPane editorContPane;
     private EditorController editor;
+    private Stage aboutWindow;
 
     /**
      * Initializes the controller class.
@@ -65,12 +66,7 @@ public class MainWinController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Markdown", "*.md"));
-
-        try {
-            editorSet();
-        } catch (IOException ex) {
-            System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        editorSet();
 
         menuFileOpen.setOnAction((new EventHandler<ActionEvent>() {
             @Override
@@ -84,7 +80,7 @@ public class MainWinController implements Initializable {
             public void handle(ActionEvent event) {
                 App.saveCheck();
                 if (App.saved) {
-                    changeRecents();
+                    App.changeRecents();
                     menuEdit.setDisable(true);
                     editor.clearEditor();
                 }
@@ -127,102 +123,89 @@ public class MainWinController implements Initializable {
         menuHelpAbout.setOnAction((new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    showAbout();
-                } catch (IOException ex) {
-                    System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+                aboutWindow = new Stage();
+                aboutWindow.setTitle("onMark • About");
+                aboutWindow.setScene(new Scene(App.loadFXML("fxml/About.fxml")));
+                aboutWindow.show();
             }
         }));
     }
 
     /**
-     * Creates and opens window showing information about program
-     *
-     * @throws IOException from App.loadFXML(string)
+     * opens file and prepares program for use
      */
-    private void showAbout() throws IOException {
-        Stage aboutWindow = new Stage();
-        aboutWindow.setTitle("onMark • About");
-        Scene aboutScene = new Scene(App.loadFXML("About.fxml"));
-        aboutWindow.setScene(aboutScene);
-        aboutWindow.show();
-    }
-
-    private void changeRecents() {
-        ((Stage) App.scene.getWindow()).setTitle("onMark - " + App.filename);
-        if (App.recent[0] != null) {
-            System.arraycopy(App.recent, 0, App.recent, 1, 5);
-        }
-        App.recent[0] = App.filename;
-    }
-
     public void openFile() {
         File file = fileChooser.showOpenDialog(App.scene.getWindow());
-        if(file != null){
+        if (file != null) {
             App.filename = file.getAbsolutePath();
-            try {
-                if (FileRW.checkIfFileCanOpen(App.filename)) {
-                    FileRW.readFile(App.filename);
+            if (FileRW.checkIfFileCanOpen(App.filename)) {
+                if (FileRW.readFile(App.filename)) {
                     menuEdit.setDisable(false);
-                    changeRecents();
+                    ((Stage) App.scene.getWindow()).setTitle("onMark - " + App.filename);
+                    App.changeRecents();
                     editor.loadFileConts();
                 } else {
-                    App.errorAlert(Strings.FILE_OPEN_ERROR.text);
+                    App.errorAlert(Strings.FILE_LOAD_ERROR.text);
                 }
-            } catch (IOException ex) {
-                App.errorAlert(Strings.FILE_LOAD_ERROR.text);
-                System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            } else {
+                App.errorAlert(Strings.FILE_OPEN_ERROR.text);
             }
-        }  
+
+        }
     }
 
+    /**
+     * Saves loaded file
+     */
     public void saveFile() {
-        if(App.filename.equals("")){
+        if (App.filename.equals("")) {
             fileChooser.setTitle("New file...");
             saveInNewFile();
-        } else{
-            try {
-            FileRW.save(App.data, App.filename);
-        } catch (IOException ex) {
-            App.errorAlert(Strings.FILE_SAVE_ERROR.text);
-            System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } else {
+            if (!FileRW.save(App.data, App.filename)) {
+                App.errorAlert(Strings.FILE_SAVE_ERROR.text);
+            }
         }
-        }
-        
     }
 
+    /**
+     * Creates a new file and prepares the editor for use
+     */
     public void newFile() {
         App.saveCheck();
         if (App.saved) {
             editor.clearEditor();
-            App.data = "";
-            App.filename = ""; 
+            FileRW.closeFile();
+            ((Stage) App.scene.getWindow()).setTitle("onMark - New file");
         }
     }
 
     private void saveInNewFile() {
         fileChooser.setInitialFileName(App.filename);
         File file = fileChooser.showSaveDialog(App.scene.getWindow());
-        if (file != null) {
-            try {
-                FileRW.save(App.data, file.getAbsolutePath());
-                App.filename = file.getAbsolutePath();
-                changeRecents();
-            } catch (IOException ex) {
-                App.errorAlert(Strings.FILE_SAVE_ERROR.text);
-                System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
+        if ((file != null) && (FileRW.save(App.data, file.getAbsolutePath()))) {
+            App.filename = file.getAbsolutePath();
+            ((Stage) App.scene.getWindow()).setTitle("onMark - " + App.filename);
+            App.changeRecents();
         } else {
             App.errorAlert(Strings.FILE_SAVE_ERROR.text);
         }
     }
 
-    public void editorSet() throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/Editor.fxml"));
-        editorContPane.getChildren().setAll((Node) loader.load());
-        editor = (EditorController) loader.getController();
-        editor.setupRespSize(editorContPane);
-        editor.getMain(this);
+    /**
+     * Creates and sets up the editor component of the program
+     */
+    public void editorSet() {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/Editor.fxml"));
+            editorContPane.getChildren().setAll((Node) loader.load());
+            editor = (EditorController) loader.getController();
+            editor.setupRespSize(editorContPane);
+            editor.getMain(this);
+        } catch (IOException ex) {
+            System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            App.errorAlert(Strings.PROGRAM_FATAL_LOAD_ERROR.text);
+            App.close();
+        }
     }
 }

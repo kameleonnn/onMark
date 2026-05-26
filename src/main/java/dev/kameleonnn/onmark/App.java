@@ -18,9 +18,9 @@ import javafx.stage.WindowEvent;
  * JavaFX App
  */
 public class App extends Application {
-    static String fxml = "fxml/MainWin.fxml";
+    static final String FXML = "fxml/MainWin.fxml";
     public static Scene scene;
-    public static String filename = "";
+    public static String filename;
     public static String data = "";
     public static boolean saved = true;
     public static String[] recent = new String[6];
@@ -28,10 +28,9 @@ public class App extends Application {
     /**
      * Main function
      * @param args arguments form terminal/command line execution.
-     * @throws IOException from function loadFXML()
      */
-    public static void main(String[] args) throws IOException {
-        scene = new Scene(loadFXML(fxml));
+    public static void main(String[] args) {
+        scene = new Scene(loadFXML(FXML));
         launch();
     }
 
@@ -45,10 +44,9 @@ public class App extends Application {
     /**
      * Implementation of start() function from JavaFX. Responsible for starting the GUI
      * @param stage JavaFX Stage class
-     * @throws IOException
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         stage.setScene(scene);
         stage.setTitle("onMark");
         stage.show();
@@ -61,14 +59,22 @@ public class App extends Application {
     /**
      * Loads contents of main window from .fxml file
      * @param fxml URL to .fxml file
-     * @return loaded JavaFX scene
-     * @throws IOException from fxmlLoader.load()
+     * @return loaded JavaFX scene on success
      */
-    public static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml){
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
-        return fxmlLoader.load();
+        try {
+            return fxmlLoader.load();
+        } catch (IOException ex) {
+            System.getLogger(App.class.getName()).log(System.Logger.Level.ERROR, Strings.PROGRAM_FATAL_LOAD_ERROR.text, ex);
+            App.close();
+            return null;
+        }
     }
 
+    /**
+     * checks if current file is saved, prompts to save if not
+     */
     public static void saveCheck() {
         if (!saved) {
             Alert savePrompt = new Alert(Alert.AlertType.CONFIRMATION);
@@ -76,11 +82,9 @@ public class App extends Application {
             savePrompt.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
             Optional<ButtonType> option = savePrompt.showAndWait();
             if (option.get() == ButtonType.YES) {
-                try {
-                    FileRW.save(App.data, App.filename);
+                if(FileRW.save(App.data, App.filename)){
                     FileRW.closeFile();
-
-                } catch (IOException ex) {
+                } else {
                     Alert error = new Alert(Alert.AlertType.ERROR);
                     error.setContentText(Strings.FILE_SAVE_ERROR.text);
                     error.show();
@@ -95,9 +99,23 @@ public class App extends Application {
         }
     }
     
+    /**
+     * global method for GUI error messages
+     * @param msg String
+     */
     public static void errorAlert(String msg){
         Alert error = new Alert(Alert.AlertType.ERROR);
         error.setContentText(msg);
         error.show();
+    }
+    
+    /**
+     * changes recently opened files listed in MainWinController.menuFileOpenRecents
+     */
+    public static void changeRecents() {
+        if (recent[0] != null) {
+            System.arraycopy(recent, 0, recent, 1, 5);
+        }
+        recent[0] = filename;
     }
 }
