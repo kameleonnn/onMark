@@ -48,8 +48,6 @@ public class MainWinController implements Initializable {
     private Menu menuFileOpenRecent;
     private final FileChooser fileChooser = new FileChooser();
     @FXML
-    private Menu menuFile;
-    @FXML
     private Menu menuView;
     @FXML
     private Menu menuHelp;
@@ -59,6 +57,7 @@ public class MainWinController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -66,32 +65,17 @@ public class MainWinController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Markdown", "*.md"));
-        
+
         try {
             editorSet();
         } catch (IOException ex) {
-            System.out.print("shite");
             System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
         menuFileOpen.setOnAction((new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                File file = fileChooser.showOpenDialog(App.scene.getWindow());
-                App.filename = file.getAbsolutePath();
-                try {
-                    if(FileRW.checkIfFileCanOpen(App.filename)){
-                        FileRW.readFile(App.filename);
-                        menuEdit.setDisable(false);
-                        changeRecents();
-                        editor.loadFileConts();
-                    } else {
-                        App.errorAlert(Strings.FILE_OPEN_ERROR.text);
-                    }
-                } catch (IOException ex) {
-                    App.errorAlert(Strings.FILE_LOAD_ERROR.text);
-                    System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+                openFile();
             }
         }));
 
@@ -110,12 +94,7 @@ public class MainWinController implements Initializable {
         menuFileSave.setOnAction((new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    FileRW.save(App.data, App.filename);
-                } catch (IOException ex) {
-                    App.errorAlert(Strings.FILE_SAVE_ERROR.text);
-                    System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+                saveFile();
             }
         }));
 
@@ -131,12 +110,7 @@ public class MainWinController implements Initializable {
         menuFileNew.setOnAction((new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                App.saveCheck();
-                if (App.saved) {
-                    fileChooser.setTitle("New file...");
-                    saveInNewFile();
-                    editor.clearEditor();
-                }
+                newFile();
             }
         }));
 
@@ -183,10 +157,54 @@ public class MainWinController implements Initializable {
         App.recent[0] = App.filename;
     }
 
+    public void openFile() {
+        File file = fileChooser.showOpenDialog(App.scene.getWindow());
+        if(file != null){
+            App.filename = file.getAbsolutePath();
+            try {
+                if (FileRW.checkIfFileCanOpen(App.filename)) {
+                    FileRW.readFile(App.filename);
+                    menuEdit.setDisable(false);
+                    changeRecents();
+                    editor.loadFileConts();
+                } else {
+                    App.errorAlert(Strings.FILE_OPEN_ERROR.text);
+                }
+            } catch (IOException ex) {
+                App.errorAlert(Strings.FILE_LOAD_ERROR.text);
+                System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }  
+    }
+
+    public void saveFile() {
+        if(App.filename.equals("")){
+            fileChooser.setTitle("New file...");
+            saveInNewFile();
+        } else{
+            try {
+            FileRW.save(App.data, App.filename);
+        } catch (IOException ex) {
+            App.errorAlert(Strings.FILE_SAVE_ERROR.text);
+            System.getLogger(MainWinController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        }
+        
+    }
+
+    public void newFile() {
+        App.saveCheck();
+        if (App.saved) {
+            editor.clearEditor();
+            App.data = "";
+            App.filename = ""; 
+        }
+    }
+
     private void saveInNewFile() {
         fileChooser.setInitialFileName(App.filename);
         File file = fileChooser.showSaveDialog(App.scene.getWindow());
-        if (file.getAbsolutePath() != null) {
+        if (file != null) {
             try {
                 FileRW.save(App.data, file.getAbsolutePath());
                 App.filename = file.getAbsolutePath();
@@ -199,11 +217,12 @@ public class MainWinController implements Initializable {
             App.errorAlert(Strings.FILE_SAVE_ERROR.text);
         }
     }
-    
-    public void editorSet() throws IOException{
+
+    public void editorSet() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/Editor.fxml"));
         editorContPane.getChildren().setAll((Node) loader.load());
         editor = (EditorController) loader.getController();
         editor.setupRespSize(editorContPane);
-    }    
+        editor.getMain(this);
+    }
 }
