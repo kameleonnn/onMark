@@ -6,10 +6,16 @@ package dev.kameleonnn.onmark;
  */
 public enum Strings {
     UNRECOGNIZED_ARGUMENT("Unrecognized argument.\n"),
+    UNKNOWN_ERROR("An unknown error occured"),
+    
+    PROGRAM_FATAL_LOAD_ERROR("An error occured trying to load program."),
     
     //config
     CONFIG_FILE("onmark-config.properties"),
     CONFIG_SAVE_ERROR("An error occured saving configuration."),
+    
+    // files
+    FILE_ERROR("An error occured while trying to work with the file"),
     
     FILE_OPEN_ERROR("File cannot be opened."),
     FILE_OPEN_SUCCESS("File was opened successfully."),
