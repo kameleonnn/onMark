@@ -10,14 +10,17 @@ onMark is written in Java using the JavaFX GUI framework, with plans of a versio
 
 ### Progress tracker
 - [x] file handling
-- [ ] basic text editor functionality
-- [ ] edit menu/button functionality
-- [ ] editor interface
+- [x] basic text editor functionality
+- [x] edit menu/button functionality
+- [x] editor interface
+- [ ] more editor functionality!
+- [ ] recent files
+- [ ] disabling buttons on certain conditions
 - [ ] zoom
-- [ ] settings
 - [ ] markdown rendering
-- [ ] rich editor / editor switching
+- [ ] settings - shortcuts, line wrap etc.
 - [ ] themes
+- [ ] rich editor / editor switching
 
 ## Installation
 
