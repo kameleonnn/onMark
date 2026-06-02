@@ -35,7 +35,7 @@ public class MainWinController implements Initializable {
     @FXML
     private MenuItem menuFileOpen;
     @FXML
-    private MenuItem menuFileSave;
+    public MenuItem menuFileSave;
     @FXML
     private MenuItem menuAppClose;
     @FXML
@@ -48,13 +48,39 @@ public class MainWinController implements Initializable {
     private Menu menuFileOpenRecent;
     private final FileChooser fileChooser = new FileChooser();
     @FXML
-    private Menu menuView;
-    @FXML
+    //private Menu menuView;
+    //@FXML
     private Menu menuHelp;
     @FXML
     private AnchorPane editorContPane;
     private EditorController editor;
     private Stage aboutWindow;
+    @FXML
+    private Menu menuFile;
+    @FXML
+    private MenuItem menuEditUndo;
+    @FXML
+    private MenuItem menuEditRedo;
+    @FXML
+    private MenuItem menuEditCopy;
+    @FXML
+    private MenuItem menuEditCut;
+    @FXML
+    private MenuItem menuEditPaste;
+    @FXML
+    private MenuItem menuEditSelectAll;
+    @FXML
+    private MenuItem menuEditItalics;
+    @FXML
+    private MenuItem menuEditBold;
+    @FXML
+    private MenuItem menuEditStrike;
+    @FXML
+    private MenuItem menuEditHigh;
+    @FXML
+    private MenuItem menuEditSub;
+    @FXML
+    private MenuItem menuEditSup;
 
     /**
      * Initializes the controller class.
@@ -68,67 +94,66 @@ public class MainWinController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Markdown", "*.md"));
         editorSet();
 
-        menuFileOpen.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                openFile();
-            }
-        }));
-
-        menuFileClose.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                App.saveCheck();
-                if (App.saved) {
-                    App.changeRecents();
-                    menuEdit.setDisable(true);
-                    editor.clearEditor();
+        EventHandler<ActionEvent> handler = event -> {
+            switch (((MenuItem) event.getSource()).getId()) {
+                case "menuFileSave" -> saveFile();
+                case "menuFileNew" -> newFile();
+                case "menuFileOpen" -> openFile();
+                case "menuFileClose" -> {
+                    App.saveCheck();
+                    if (App.saved) {
+                        App.changeRecents();
+                        menuEdit.setDisable(true);
+                        editor.clearEditor();
+                    }
+                }
+                case "menuFileSaveAs" -> {
+                    fileChooser.setTitle("Save as...");
+                    saveInNewFile();
+                }
+                case "menuAppClose" -> {
+                    App.saveCheck();
+                    if (App.saved) {
+                        App.close();
+                    }
+                }
+                case "menuHelpAbout" -> {
+                    aboutWindow = new Stage();
+                    aboutWindow.setTitle("onMark • About");
+                    aboutWindow.setScene(new Scene(App.loadFXML("fxml/About.fxml")));
+                    aboutWindow.show();
+                }
+                case "menuEditCopy" -> editor.ctrl("copy");
+                case "menuEditCut" -> editor.ctrl("cut");
+                case "menuEditPaste" -> editor.ctrl("paste");
+                case "menuEditSelectAll" -> editor.ctrl("selectall");
+                case "menuEditUndo" -> editor.ctrl("undo");
+                case "menuEditRedo" -> editor.ctrl("redo");
+                case "menuEditBold" -> editor.edit("**");
+                case "menuEditItalic" -> editor.edit("__");
+                case "menuEditUnderline" -> editor.edit("<ins>", "</ins");
+                case "menuEditStrikethrough" -> editor.edit("~~");
+                case "menuEditCodeblock" -> editor.edit("\n```\n");
+                default -> {
                 }
             }
-        }));
-
-        menuFileSave.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                saveFile();
-            }
-        }));
-
-        menuFileSaveAs.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                fileChooser.setTitle("Save as...");
-                saveInNewFile();
-            }
-
-        }));
-
-        menuFileNew.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                newFile();
-            }
-        }));
-
-        menuAppClose.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                App.saveCheck();
-                if (App.saved) {
-                    App.close();
-                }
-            }
-        }));
-
-        menuHelpAbout.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                aboutWindow = new Stage();
-                aboutWindow.setTitle("onMark • About");
-                aboutWindow.setScene(new Scene(App.loadFXML("fxml/About.fxml")));
-                aboutWindow.show();
-            }
-        }));
+        };
+        
+        menuFileSaveAs.setOnAction(handler);
+        menuFileClose.setOnAction(handler);
+        menuAppClose.setOnAction(handler);
+        menuFileSave.setOnAction(handler);
+        menuFileNew.setOnAction(handler);
+        menuFileOpen.setOnAction(handler);
+        menuEditBold.setOnAction(handler);
+        menuEditItalics.setOnAction(handler);
+        menuEditCopy.setOnAction(handler);
+        menuEditCut.setOnAction(handler);
+        menuEditPaste.setOnAction(handler);
+        menuEditSelectAll.setOnAction(handler);
+        menuEditUndo.setOnAction(handler);
+        menuEditRedo.setOnAction(handler);
+        //menuEditCodeblock.setOnAction(handler);
     }
 
     /**
@@ -164,6 +189,8 @@ public class MainWinController implements Initializable {
         } else {
             if (!FileRW.save(App.data, App.filename)) {
                 App.errorAlert(Strings.FILE_SAVE_ERROR.text);
+            }
+            else{
             }
         }
     }
