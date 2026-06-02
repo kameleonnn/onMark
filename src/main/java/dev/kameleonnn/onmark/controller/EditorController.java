@@ -1,9 +1,11 @@
 package dev.kameleonnn.onmark.controller;
 
 import dev.kameleonnn.onmark.App;
-import java.io.IOException;
+import dev.kameleonnn.onmark.Editor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,15 +14,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.AnchorPane;
+
 /**
  * FXML Controller class
  *
  * @author kameleonnn
  */
 public class EditorController implements Initializable {
-
 
     @FXML
     private AnchorPane editorMainCont;
@@ -42,43 +46,112 @@ public class EditorController implements Initializable {
     private Button buttonEditBold;
     @FXML
     private Button buttonEditItalic;
-    
+
     private MainWinController main;
+    @FXML
+    private Button buttonEditCodeblock;
+    @FXML
+    private Button buttonEditUnderline;
+    @FXML
+    private Button buttonEditStrikethrough;
+    @FXML
+    private Button buttonEditHighlight;
+    @FXML
+    private Button buttonEditSubscript;
+    @FXML
+    private Button buttonEditSupscript;
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         // TODO
-        buttonFileSave.setOnAction((new EventHandler<ActionEvent>() {
+        // more elegant version of whatever this is
+        textInput.textProperty().addListener(new ChangeListener<String>(){
             @Override
-            public void handle(ActionEvent event) {
-                main.saveFile();
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                App.saved=false;
+                buttonFileSave.setGraphic(new ImageView(new Image(App.class.getResource("icons/unsaved.png").toString())));
             }
-        }));
-        
-        buttonFileNew.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                main.newFile();
+        });
+
+        EventHandler<ActionEvent> handler = event -> {
+            switch (((Button) event.getSource()).getId()) {
+                case "buttonFileSave" -> main.saveFile();
+                case "buttonFileNew" -> main.newFile();
+                case "buttonFileOpen" -> main.openFile();
+                case "buttonEditBold" -> edit("**");
+                case "buttonEditItalic" -> edit("__");
+                case "buttonEditUnderline" -> edit("<ins>", "</ins>");
+                case "buttonEditStrikethrough" -> edit("~~");
+                case "buttonEditCodeblock" -> edit("\n```\n");
+                default -> {
+                }
             }
-        }));
-        
-        buttonFileOpen.setOnAction((new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                main.openFile();
+        };
+
+        buttonEditUnderline.setOnAction(handler);
+        buttonEditStrikethrough.setOnAction(handler);
+        buttonFileSave.setOnAction(handler);
+        buttonFileNew.setOnAction(handler);
+        buttonFileOpen.setOnAction(handler);
+        buttonEditBold.setOnAction(handler);
+        buttonEditItalic.setOnAction(handler);
+        buttonEditCodeblock.setOnAction(handler);
+    }
+
+    /**
+     * allows Ctrl+[key] usage through UI elements
+     * @param op
+     */
+    public void ctrl(String op) {
+        switch (op) {
+            case "copy" -> textInput.copy();
+            case "cut" -> textInput.cut();
+            case "paste" -> textInput.paste();
+            case "selectall" -> textInput.selectAll();
+            case "undo" -> textInput.undo();
+            case "redo" -> textInput.redo();
+            default -> {
             }
-        }));
-        
-    } 
-    
-    public void getMain(MainWinController controller){
-        main = controller;
+        }
+    }
+
+    /**
+     * wrapper method for Editor.wrapStr(tag, str). allows for editing through UI elements
+     * @param tag markdown tag 
+     */
+    public void edit(String tag) {
+        textInput.replaceSelection(Editor.wrapStr(tag, textInput.getSelectedText()));
     }
     
-    public void setupRespSize(AnchorPane mainCont){
+    /**
+     * wrapper method for Editor.wrapStr(tag1, tag2, str). allows for editing through UI elements
+     * @param tag1 opening markdown tag
+     * @param tag2 closing markdown tag
+     */
+    public void edit(String tag1, String tag2) {
+        textInput.replaceSelection(Editor.wrapStr(tag1, tag2, textInput.getSelectedText()));
+    }
+
+    /**
+     * Passes controller of the main window to this instance of EditorController. Allows using some methods of that class
+     * @param controller MainWinController
+     */
+    public void getMain(MainWinController controller) {
+        main = controller;
+    }
+
+    /**
+     * Allows to setup responsive sizing of some elements in this controller. This is done from MainWinController
+     * @param mainCont AnchorPane in the main window containing elements of this editor
+     */
+    public void setupRespSize(AnchorPane mainCont) {
         editorMainCont.prefWidthProperty().bind(mainCont.widthProperty());
         editorMainCont.prefHeightProperty().bind(mainCont.heightProperty());
         editorSplitView.prefWidthProperty().bind(editorMainCont.widthProperty());
@@ -86,12 +159,20 @@ public class EditorController implements Initializable {
         textInput.prefHeightProperty().bind(splitInput.heightProperty());
         textInput.prefWidthProperty().bind(splitInput.widthProperty());
     }
-    
-    public void loadFileConts(){
+
+    /**
+     * Loads contents of given file into the text area
+     */
+    public void loadFileConts() {
         textInput.setText(App.data);
+        App.saved=true;
     }
-    public void clearEditor(){
+
+    /**
+     * Clears current contents of text area
+     */
+    public void clearEditor() {
         textInput.setText("");
     }
-    
+
 }
