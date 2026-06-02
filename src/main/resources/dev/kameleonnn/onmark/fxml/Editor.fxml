@@ -7,21 +7,88 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="editorMainCont" prefHeight="540.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.EditorController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <Button fx:id="buttonFileSave" mnemonicParsing="false" text="Save" />
-            <Button fx:id="buttonFileNew" mnemonicParsing="false" text="New" />
-            <Button fx:id="buttonFileOpen" mnemonicParsing="false" text="Open..." />
+          <Button fx:id="buttonFileSave" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="Save">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/save.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="buttonFileNew" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="New">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/empty%20file.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="buttonFileOpen" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Open...">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/open.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Separator orientation="VERTICAL" />
-            <Button fx:id="buttonEditBold" mnemonicParsing="false" text="Bold" />
-            <Button fx:id="buttonEditItalic" mnemonicParsing="false" text="Italics" />
+            <Button fx:id="buttonEditBold" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Bold">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/b.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="buttonEditItalic" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Italics">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/i.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="buttonEditUnderline" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Underline">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../icons/underline.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="buttonEditStrikethrough" contentDisplay="GRAPHIC_ONLY" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Strikethrough">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/strike.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="buttonEditHighlight" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Highlight" />
+            <Button fx:id="buttonEditSubscript" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Subscript" />
+            <Button fx:id="buttonEditSupscript" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Supscript" />
+            <Button fx:id="buttonEditCodeblock" contentDisplay="GRAPHIC_ONLY" maxHeight="35.0" maxWidth="35.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="Codeblock">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../icons/code.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
         </items>
       </ToolBar>
-      <SplitPane fx:id="editorSplitView" dividerPositions="0.487468671679198" prefHeight="170.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+      <SplitPane fx:id="editorSplitView" dividerPositions="0.487468671679198" prefHeight="170.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
          <items>
             <ScrollPane fx:id="splitInput" prefHeight="158.0" prefWidth="449.0">
                <content>
