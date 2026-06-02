@@ -5,8 +5,33 @@ package dev.kameleonnn.onmark;
  */
 public class Editor {
     
-    public String wrapStr(String op, String str){
-        return op+str+op;
+    /**
+     * wraps a given string in markdown tags
+     * @param tag markdown tag
+     * @param str string to be wrapped
+     * @return
+     */
+    public static String wrapStr(String tag, String str){
+        App.saved=false;
+        if (str.contains(tag)){
+            return str.replace("tag", "");
+        }
+        return tag+str+tag;
+    }
+
+    /**
+     * wraps a given string in markdown tags
+     * @param tag1 tagening markdown tag
+     * @param tag2 closing markdown tag
+     * @param str string to be wrapped
+     * @return
+     */
+    public static String wrapStr(String tag1, String tag2, String str){
+        App.saved=false;
+        if (str.contains(tag1) || str.contains(tag2)){
+            return str.replace(tag2, "").replace(tag1, "");
+        }
+        return tag1+str+tag2;
     }
     
     // TODO
