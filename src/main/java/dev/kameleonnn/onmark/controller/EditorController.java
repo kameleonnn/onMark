@@ -164,6 +164,9 @@ public class EditorController implements Initializable {
      * Loads contents of given file into the text area
      */
     public void loadFileConts() {
+        if(!textInput.getText().equals("")){
+            textInput.clear();
+        }
         textInput.setText(App.data);
         App.saved=true;
     }
@@ -172,7 +175,7 @@ public class EditorController implements Initializable {
      * Clears current contents of text area
      */
     public void clearEditor() {
-        textInput.setText("");
+        textInput.clear();
     }
 
 }
