@@ -39,8 +39,6 @@ public class MainWinController implements Initializable {
     @FXML
     private MenuItem menuAppClose;
     @FXML
-    private MenuItem menuHelpAbout;
-    @FXML
     private MenuItem menuFileNew;
     @FXML
     private Menu menuEdit;
@@ -81,6 +79,16 @@ public class MainWinController implements Initializable {
     private MenuItem menuEditSub;
     @FXML
     private MenuItem menuEditSup;
+    @FXML
+    private MenuItem menuRecentClear;
+    @FXML
+    private Menu menuView;
+    @FXML
+    private Menu menuSettings;
+    @FXML
+    private Menu menuAbout;
+    @FXML
+    private MenuItem fileRecent1;
 
     /**
      * Initializes the controller class.
@@ -91,22 +99,19 @@ public class MainWinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fileChooser.setTitle("Open file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Markdown", "*.md"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md"), new FileChooser.ExtensionFilter("Text (*.txt)", "*.txt"), new FileChooser.ExtensionFilter("All types", "*"));
         editorSet();
 
         EventHandler<ActionEvent> handler = event -> {
             switch (((MenuItem) event.getSource()).getId()) {
-                case "menuFileSave" -> saveFile();
-                case "menuFileNew" -> newFile();
-                case "menuFileOpen" -> openFile();
-                case "menuFileClose" -> {
-                    App.saveCheck();
-                    if (App.saved) {
-                        App.changeRecents();
-                        menuEdit.setDisable(true);
-                        editor.clearEditor();
-                    }
-                }
+                case "menuFileSave" ->
+                    saveFile();
+                case "menuFileNew" ->
+                    newFile();
+                case "menuFileOpen" ->
+                    openFile();
+                case "menuFileClose" ->
+                    closeFile();
                 case "menuFileSaveAs" -> {
                     fileChooser.setTitle("Save as...");
                     saveInNewFile();
@@ -123,22 +128,34 @@ public class MainWinController implements Initializable {
                     aboutWindow.setScene(new Scene(App.loadFXML("fxml/About.fxml")));
                     aboutWindow.show();
                 }
-                case "menuEditCopy" -> editor.ctrl("copy");
-                case "menuEditCut" -> editor.ctrl("cut");
-                case "menuEditPaste" -> editor.ctrl("paste");
-                case "menuEditSelectAll" -> editor.ctrl("selectall");
-                case "menuEditUndo" -> editor.ctrl("undo");
-                case "menuEditRedo" -> editor.ctrl("redo");
-                case "menuEditBold" -> editor.edit("**");
-                case "menuEditItalic" -> editor.edit("__");
-                case "menuEditUnderline" -> editor.edit("<ins>", "</ins");
-                case "menuEditStrikethrough" -> editor.edit("~~");
-                case "menuEditCodeblock" -> editor.edit("\n```\n");
+                // edit
+                case "menuEditCopy" ->
+                    editor.ctrl("copy");
+                case "menuEditCut" ->
+                    editor.ctrl("cut");
+                case "menuEditPaste" ->
+                    editor.ctrl("paste");
+                case "menuEditSelectAll" ->
+                    editor.ctrl("selectall");
+                case "menuEditUndo" ->
+                    editor.ctrl("undo");
+                case "menuEditRedo" ->
+                    editor.ctrl("redo");
+                case "menuEditBold" ->
+                    editor.edit("**");
+                case "menuEditItalic" ->
+                    editor.edit("__");
+                case "menuEditUnderline" ->
+                    editor.edit("<ins>", "</ins");
+                case "menuEditStrikethrough" ->
+                    editor.edit("~~");
+                case "menuEditCodeblock" ->
+                    editor.edit("\n```\n");
                 default -> {
                 }
             }
         };
-        
+
         menuFileSaveAs.setOnAction(handler);
         menuFileClose.setOnAction(handler);
         menuAppClose.setOnAction(handler);
@@ -156,6 +173,16 @@ public class MainWinController implements Initializable {
         //menuEditCodeblock.setOnAction(handler);
     }
 
+    public void closeFile() {
+        App.saveCheck();
+        if (App.saved) {
+            App.changeRecents();
+            menuEdit.setDisable(true);
+            editor.clearEditor();
+            App.setWindowTitle("");
+        }
+    }
+
     /**
      * opens file and prepares program for use
      */
@@ -166,7 +193,7 @@ public class MainWinController implements Initializable {
             if (FileRW.checkIfFileCanOpen(App.filename)) {
                 if (FileRW.readFile(App.filename)) {
                     menuEdit.setDisable(false);
-                    ((Stage) App.scene.getWindow()).setTitle("onMark - " + App.filename);
+                    App.setWindowTitle(" - " + App.filename);
                     App.changeRecents();
                     editor.loadFileConts();
                 } else {
@@ -189,8 +216,9 @@ public class MainWinController implements Initializable {
         } else {
             if (!FileRW.save(App.data, App.filename)) {
                 App.errorAlert(Strings.FILE_SAVE_ERROR.text);
-            }
-            else{
+            } else {
+                App.data = editor.passText();
+                FileRW.save(App.data, App.filename);
             }
         }
     }
@@ -203,7 +231,7 @@ public class MainWinController implements Initializable {
         if (App.saved) {
             editor.clearEditor();
             FileRW.closeFile();
-            ((Stage) App.scene.getWindow()).setTitle("onMark - New file");
+            App.setWindowTitle(" - New file");
         }
     }
 
@@ -211,12 +239,27 @@ public class MainWinController implements Initializable {
         fileChooser.setInitialFileName(App.filename);
         File file = fileChooser.showSaveDialog(App.scene.getWindow());
         if ((file != null) && (FileRW.save(App.data, file.getAbsolutePath()))) {
-            App.filename = file.getAbsolutePath();
-            ((Stage) App.scene.getWindow()).setTitle("onMark - " + App.filename);
+            App.filename = file.getAbsolutePath() + getExtension();
+            App.data = editor.passText();
+            FileRW.save(App.data, App.filename);
+            App.setWindowTitle(" - " + App.filename);
             App.changeRecents();
         } else {
             App.errorAlert(Strings.FILE_SAVE_ERROR.text);
         }
+    }
+
+    private String getExtension() {
+        String ext = fileChooser.getSelectedExtensionFilter().getDescription();
+        ext = switch (ext) {
+            case "Markdown (*.md)" ->
+                ".md";
+            case "Text (*.txt)" ->
+                ".txt";
+            default ->
+                "";
+        };
+        return ext;
     }
 
     /**
@@ -235,4 +278,5 @@ public class MainWinController implements Initializable {
             App.close();
         }
     }
+
 }

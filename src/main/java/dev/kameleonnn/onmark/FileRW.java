@@ -54,6 +54,7 @@ public class FileRW {
     public static boolean readFile(String filename){
         try (BufferedReader dataRead = new BufferedReader( new FileReader(filename))) {
             String line;
+            App.data="";
             while((line=dataRead.readLine())!=null){
                 if(!line.equals("")){
                     App.data = App.data + line+"\n";

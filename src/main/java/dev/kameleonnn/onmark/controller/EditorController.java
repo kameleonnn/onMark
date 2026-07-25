@@ -4,8 +4,6 @@ import dev.kameleonnn.onmark.App;
 import dev.kameleonnn.onmark.Editor;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,8 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.AnchorPane;
 
@@ -69,16 +65,6 @@ public class EditorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        // TODO
-        // more elegant version of whatever this is
-        textInput.textProperty().addListener(new ChangeListener<String>(){
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                App.saved=false;
-                buttonFileSave.setGraphic(new ImageView(new Image(App.class.getResource("icons/unsaved.png").toString())));
-            }
-        });
 
         EventHandler<ActionEvent> handler = event -> {
             switch (((Button) event.getSource()).getId()) {
@@ -176,6 +162,10 @@ public class EditorController implements Initializable {
      */
     public void clearEditor() {
         textInput.clear();
+    }
+    
+    public String passText(){
+        return textInput.getText();
     }
 
 }

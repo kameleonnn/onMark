@@ -20,7 +20,7 @@ import javafx.stage.WindowEvent;
 public class App extends Application {
     static final String FXML = "fxml/MainWin.fxml";
     public static Scene scene;
-    public static String filename;
+    public static String filename = "";
     public static String data = "";
     public static boolean saved = true;
     public static String[] recent = new String[6];
@@ -117,5 +117,9 @@ public class App extends Application {
             System.arraycopy(recent, 0, recent, 1, 5);
         }
         recent[0] = filename;
+    }
+    
+    public static void setWindowTitle(String title){
+        ((Stage) scene.getWindow()).setTitle("onMark" + title);
     }
 }

@@ -32,11 +32,7 @@
                      </accelerator></MenuItem>
                   <Menu fx:id="menuFileOpenRecent" mnemonicParsing="false" text="Open recent...">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                        <MenuItem mnemonicParsing="false" text="3" />
-                        <MenuItem mnemonicParsing="false" text="4" />
-                        <MenuItem mnemonicParsing="false" text="5" />
+                      <MenuItem fx:id="fileRecent1" mnemonicParsing="false" text="1" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="menuRecentClear" mnemonicParsing="false" text="Clear Recents" />
                     </items>
@@ -98,11 +94,9 @@
                      </accelerator></MenuItem>
                </items>
             </Menu>
-            <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
-               <items>
-                  <MenuItem fx:id="menuHelpAbout" mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
+            <Menu fx:id="menuSettings" mnemonicParsing="false" text="Settings" />
+            <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help" />
+            <Menu fx:id="menuAbout" mnemonicParsing="false" text="About" />
          </menus>
       </MenuBar>
       <AnchorPane fx:id="editorContPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0" />
