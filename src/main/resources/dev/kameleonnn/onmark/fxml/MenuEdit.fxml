@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+
+<Menu fx:id="menuEdit" disable="true" mnemonicParsing="false" text="Edit" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.MenuEditController">
+    <items>
+        <MenuItem fx:id="menuEditUndo" mnemonicParsing="false" text="Undo">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditRedo" mnemonicParsing="false" text="Redo">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem fx:id="menuEditCopy" mnemonicParsing="false" text="Copy">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditCut" mnemonicParsing="false" text="Cut">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditPaste" mnemonicParsing="false" text="Paste">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditSelectAll" mnemonicParsing="false" text="Select All">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem fx:id="menuEditItalics" mnemonicParsing="false" text="Italicize">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditBold" mnemonicParsing="false" text="Bold">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="B" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditStrike" mnemonicParsing="false" text="Strikethrough" />
+        <MenuItem fx:id="menuEditHigh" mnemonicParsing="false" text="Highlight" />
+        <MenuItem fx:id="menuEditSub" mnemonicParsing="false" text="Subscript">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="DOWN" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem fx:id="menuEditSup" mnemonicParsing="false" text="Supscript">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+    </items>
+</Menu>
