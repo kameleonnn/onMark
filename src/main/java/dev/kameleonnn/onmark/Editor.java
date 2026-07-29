@@ -9,7 +9,7 @@ public class Editor {
      * wraps a given string in markdown tags
      * @param tag markdown tag
      * @param str string to be wrapped
-     * @return
+     * @return resulting string
      */
     public static String wrapStr(String tag, String str){
         App.saved=false;
@@ -21,10 +21,10 @@ public class Editor {
 
     /**
      * wraps a given string in markdown tags
-     * @param tag1 tagening markdown tag
+     * @param tag1 opening markdown tag
      * @param tag2 closing markdown tag
      * @param str string to be wrapped
-     * @return
+     * @return resulting string
      */
     public static String wrapStr(String tag1, String tag2, String str){
         App.saved=false;
@@ -37,5 +37,10 @@ public class Editor {
     // TODO
     public String insertTable(int col, int row){
         return col+" "+row;
+    }
+    
+    public String insertHyperlink(String text, String url){
+        App.saved=false;
+        return "["+text+"]("+url+")";
     }
 }
