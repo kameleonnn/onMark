@@ -49,21 +49,21 @@ public class MenuEditController implements Initializable {
         EventHandler<ActionEvent> handler = event -> {
             switch (((MenuItem) event.getSource()).getId()) {
                 case "menuEditCopy" ->
-                    parent.plainEditorController.ctrl("copy");
+                    parent.getEditorCtrl().ctrl("copy");
                 case "menuEditCut" ->
-                    parent.plainEditorController.ctrl("cut");
+                    parent.getEditorCtrl().ctrl("cut");
                 case "menuEditPaste" ->
-                    parent.plainEditorController.ctrl("paste");
+                    parent.getEditorCtrl().ctrl("paste");
                 case "menuEditSelectAll" ->
-                    parent.plainEditorController.ctrl("selectall");
+                    parent.getEditorCtrl().ctrl("selectall");
                 case "menuEditUndo" ->
-                    parent.plainEditorController.ctrl("undo");
+                    parent.getEditorCtrl().ctrl("undo");
                 case "menuEditRedo" ->
-                    parent.plainEditorController.ctrl("redo");
+                    parent.getEditorCtrl().ctrl("redo");
                 case "menuEditBold" ->
-                    parent.plainEditorController.edit("**");
+                    parent.getEditorCtrl().edit("**");
                 case "menuEditItalic" ->
-                    parent.plainEditorController.edit("__");
+                    parent.getEditorCtrl().edit("__");
                 /*case "menuEditUnderline" ->
                     parent.editor.edit("<ins>", "</ins");
                 case "menuEditStrikethrough" ->

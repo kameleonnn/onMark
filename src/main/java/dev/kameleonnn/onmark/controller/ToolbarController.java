@@ -7,8 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -17,59 +15,55 @@ import javafx.scene.layout.Pane;
  */
 public class ToolbarController implements Initializable {
     public MainWinController parent;
-     @FXML
-    private Button buttonFileSave;
-    @FXML
-    private Button buttonFileNew;
-    @FXML
-    private Button buttonFileOpen;
-    @FXML
-    private Button buttonEditBold;
-    @FXML
-    private Button buttonEditItalic;
-    @FXML
-    private Button buttonEditCodeblock;
-    @FXML
-    private Button buttonEditUnderline;
-    @FXML
-    private Button buttonEditStrikethrough;
-    @FXML
-    private Button buttonEditHighlight;
-    @FXML
-    private Button buttonEditSubscript;
-    @FXML
-    private Button buttonEditSupscript;
-    @FXML
-    private AnchorPane toolbar;
+    @FXML private Button toolbarFileSave;
+    @FXML private Button toolbarFileNew;
+    @FXML private Button toolbarFileOpen;
+    @FXML private Button toolbarBold;
+    @FXML private Button toolbarItalic;
+    @FXML private Button toolbarCodeblock;
+    @FXML private Button toolbarUnderline;
+    @FXML private Button toolbarStrikethrough;
+    @FXML private Button toolbarUndo;
+    @FXML private Button toolbarRedo;
+    @FXML private Button toolbarEditBold;
+    @FXML private Button toolbarHighlight;
+    @FXML private Button toolbarSubscript;
+    @FXML private Button toolbarSupscript;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         EventHandler<ActionEvent> handler = event -> {
             switch (((Button) event.getSource()).getId()) {
-                case "buttonFileSave" -> parent.menuFilesController.saveFile();
-                case "buttonFileNew" -> parent.menuFilesController.newFile();
-                case "buttonFileOpen" -> parent.menuFilesController.openFile();
-                case "buttonEditBold" -> parent.plainEditorController.edit("**");
-                case "buttonEditItalic" -> parent.plainEditorController.edit("__");
-                case "buttonEditUnderline" -> parent.plainEditorController.edit("<ins>", "</ins>");
-                case "buttonEditStrikethrough" -> parent.plainEditorController.edit("~~");
-                case "buttonEditCodeblock" -> parent.plainEditorController.edit("\n```\n");
+                case "toolbarFileSave" -> parent.getFilesCtrl().saveFile();
+                case "toolbarFileNew" -> parent.getFilesCtrl().newFile();
+                case "toolbarFileOpen" -> parent.getFilesCtrl().openFile();
+                case "toolbarUndo" -> parent.getEditorCtrl().ctrl("undo");
+                case "toolbarRedo" -> parent.getEditorCtrl().ctrl("redo");
+                case "toolbarBold" -> parent.getEditorCtrl().edit("**");
+                case "toolbarItalic" -> parent.getEditorCtrl().edit("__");
+                case "toolbarUnderline" -> parent.getEditorCtrl().edit("<ins>", "</ins>");
+                case "toolbarStrikethrough" -> parent.getEditorCtrl().edit("~~");
+                case "toolbarCodeblock" -> parent.getEditorCtrl().edit("\n```\n");
                 default -> {
                 }
             }
         };
-
-        buttonEditUnderline.setOnAction(handler);
-        buttonEditStrikethrough.setOnAction(handler);
-        buttonFileSave.setOnAction(handler);
-        buttonFileNew.setOnAction(handler);
-        buttonFileOpen.setOnAction(handler);
-        buttonEditBold.setOnAction(handler);
-        buttonEditItalic.setOnAction(handler);
-        buttonEditCodeblock.setOnAction(handler);
+        
+        toolbarFileSave.setOnAction(handler);
+        toolbarFileNew.setOnAction(handler);
+        toolbarFileOpen.setOnAction(handler);
+        toolbarUndo.setOnAction(handler);
+        toolbarRedo.setOnAction(handler);
+        toolbarBold.setOnAction(handler);
+        toolbarItalic.setOnAction(handler);
+        toolbarUnderline.setOnAction(handler);
+        toolbarStrikethrough.setOnAction(handler);
+        toolbarCodeblock.setOnAction(handler);
         // TODO
         
         
