@@ -93,8 +93,7 @@ public class MenuFilesController implements Initializable {
         App.saveCheck();
         if (App.saved) {
             App.changeRecents();
-            parent.setEditingEnabled(true);
-            parent.getEditorCtrl().clearEditor();
+            parent.plainEditorController.clearEditor();
             App.setWindowTitle("");
         }
     }
@@ -108,10 +107,9 @@ public class MenuFilesController implements Initializable {
             App.filename = file.getAbsolutePath();
             if (FileRW.checkIfFileCanOpen(App.filename)) {
                 if (FileRW.readFile(App.filename)) {
-                    parent.setEditingEnabled(false);
                     App.setWindowTitle(" - " + App.filename);
                     App.changeRecents();
-                    parent.getEditorCtrl().loadFileConts();
+                    parent.plainEditorController.loadFileConts();
                 } else {
                     App.errorAlert(Strings.FILE_LOAD_ERROR.text);
                 }
@@ -133,7 +131,7 @@ public class MenuFilesController implements Initializable {
             if (!FileRW.save(App.data, App.filename)) {
                 App.errorAlert(Strings.FILE_SAVE_ERROR.text);
             } else {
-                App.data = parent.getEditorCtrl().passText();
+                App.data = parent.plainEditorController.passText();
             }
         }
     }
@@ -144,7 +142,7 @@ public class MenuFilesController implements Initializable {
     public void newFile() {
         App.saveCheck();
         if (App.saved) {
-            parent.getEditorCtrl().clearEditor();
+            parent.plainEditorController.clearEditor();
             FileRW.closeFile();
             App.setWindowTitle(" - New file");
         }
@@ -155,7 +153,7 @@ public class MenuFilesController implements Initializable {
         File file = fileChooser.showSaveDialog(App.scene.getWindow());
         if ((file != null) && (FileRW.save(App.data, file.getAbsolutePath()))) {
             App.filename = file.getAbsolutePath() + getExtension();
-            App.data = parent.getEditorCtrl().passText();
+            App.data = parent.plainEditorController.passText();
             FileRW.save(App.data, App.filename);
             App.setWindowTitle(" - " + App.filename);
             App.changeRecents();

@@ -39,16 +39,16 @@ public class ToolbarController implements Initializable {
         
         EventHandler<ActionEvent> handler = event -> {
             switch (((Button) event.getSource()).getId()) {
-                case "toolbarFileSave" -> parent.getFilesCtrl().saveFile();
-                case "toolbarFileNew" -> parent.getFilesCtrl().newFile();
-                case "toolbarFileOpen" -> parent.getFilesCtrl().openFile();
-                case "toolbarUndo" -> parent.getEditorCtrl().ctrl("undo");
-                case "toolbarRedo" -> parent.getEditorCtrl().ctrl("redo");
-                case "toolbarBold" -> parent.getEditorCtrl().edit("**");
-                case "toolbarItalic" -> parent.getEditorCtrl().edit("__");
-                case "toolbarUnderline" -> parent.getEditorCtrl().edit("<ins>", "</ins>");
-                case "toolbarStrikethrough" -> parent.getEditorCtrl().edit("~~");
-                case "toolbarCodeblock" -> parent.getEditorCtrl().edit("\n```\n");
+                case "toolbarFileSave" -> parent.menuFilesController.saveFile();
+                case "toolbarFileNew" -> parent.menuFilesController.newFile();
+                case "toolbarFileOpen" -> parent.menuFilesController.openFile();
+                case "toolbarUndo" -> parent.plainEditorController.ctrl("undo");
+                case "toolbarRedo" -> parent.plainEditorController.ctrl("redo");
+                case "toolbarBold" -> parent.plainEditorController.edit("**");
+                case "toolbarItalic" -> parent.plainEditorController.edit("__");
+                case "toolbarUnderline" -> parent.plainEditorController.edit("<ins>", "</ins>");
+                case "toolbarStrikethrough" -> parent.plainEditorController.edit("~~");
+                case "toolbarCodeblock" -> parent.plainEditorController.edit("\n```\n");
                 default -> {
                 }
             }

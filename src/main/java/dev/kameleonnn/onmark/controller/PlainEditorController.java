@@ -4,6 +4,7 @@ import dev.kameleonnn.onmark.App;
 import dev.kameleonnn.onmark.Editor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
@@ -17,10 +18,8 @@ import javafx.scene.control.TextArea;
  */
 public class PlainEditorController implements Initializable {
     public MainWinController parent;
-    @FXML
-    private ScrollPane plainEditor;
-    @FXML
-    private TextArea textInput;
+    @FXML private ScrollPane plainEditor;
+    @FXML private TextArea textInput;
 
     /**
      * Initializes the controller class.
@@ -31,6 +30,7 @@ public class PlainEditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupRespSize(); 
+        
     }
 
     /**
@@ -84,6 +84,15 @@ public class PlainEditorController implements Initializable {
         }
         textInput.setText(App.data);
         App.saved=true;
+        textInput.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
+            if(textInput.getText().equals(App.data)){
+                App.saved=true;
+            }
+            else{
+                App.saved = false;
+            }
+            //if render pane is on then update it
+        });
     }
 
     /**

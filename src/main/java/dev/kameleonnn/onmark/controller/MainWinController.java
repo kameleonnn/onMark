@@ -19,12 +19,13 @@ import javafx.stage.Stage;
  * @author kameleonnn
  */
 public class MainWinController implements Initializable {
+
     @FXML private Menu menuFiles;
-    private MenuFilesController menuFilesController;
+    public MenuFilesController menuFilesController;
     @FXML private Menu menuEdit;
-    private MenuEditController menuEditController;
-    private ToolbarController toolbarController;
-    private PlainEditorController plainEditorController;
+    public MenuEditController menuEditController;
+    public ToolbarController toolbarController;
+    public PlainEditorController plainEditorController;
     //@FXML
     private Stage aboutWindow;
     
@@ -64,21 +65,5 @@ public class MainWinController implements Initializable {
         };
         
         menuAbout.setOnAction(handler);
-    }
-    public void setEditingEnabled(boolean option){
-        menuEdit.setDisable(option);
-        plainEditorController.setTextInputEnabled(option);
-    }
-    
-    public MenuFilesController getFilesCtrl(){
-        return this.menuFilesController;
-    }
-    
-    public MenuEditController getEditCtrl(){
-        return this.menuEditController;
-    }
-    
-    public PlainEditorController getEditorCtrl(){
-        return this.plainEditorController;
     }
 }
