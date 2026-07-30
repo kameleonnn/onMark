@@ -1,6 +1,7 @@
 module dev.kameleonnn.onmark {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
     requires java.logging;
     requires java.base;
 
