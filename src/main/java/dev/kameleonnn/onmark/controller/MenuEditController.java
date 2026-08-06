@@ -36,9 +36,6 @@ public class MenuEditController implements Initializable {
     @FXML
     private MenuItem menuEditHigh;
     @FXML
-    private MenuItem menuEditSub;
-    @FXML
-    private MenuItem menuEditSup;
 
     /**
      * Initializes the controller class.
@@ -64,12 +61,18 @@ public class MenuEditController implements Initializable {
                     parent.plainEditorController.edit("**");
                 case "menuEditItalic" ->
                     parent.plainEditorController.edit("__");
-                /*case "menuEditUnderline" ->
-                    parent.editor.edit("<ins>", "</ins");
+                case "menuEditUnderline" ->
+                    parent.plainEditorController.edit("<ins>", "</ins");
                 case "menuEditStrikethrough" ->
-                    parent.editor.edit("~~");
+                    parent.plainEditorController.edit("~~");
                 case "menuEditCodeblock" ->
-                    parent.editor.edit("\n```\n");*/
+                    parent.plainEditorController.edit("\n```\n");
+                case "menuInsertImage" -> {
+                    parent.plainEditorController.insertImage();
+                }
+                case "menuInsertHyperlink" -> {
+                    parent.plainEditorController.insertHyperlink();
+                }
                 default -> {
                 }
             }

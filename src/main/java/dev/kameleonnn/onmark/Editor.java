@@ -39,8 +39,19 @@ public class Editor {
         return col+" "+row;
     }
     
-    public String insertHyperlink(String text, String url){
+    public static String insertHyperlink(String text, String url){
         App.saved=false;
+        if(text==null || text.equals("")){
+            text = "Link";
+        }
         return "["+text+"]("+url+")";
+    }
+    
+    public static String insertImage(String url){
+        return "![Alt text]("+url+")\"Title\"";
+    }
+    
+    public static String insertHeader(String str){
+        return "# "+str;
     }
 }

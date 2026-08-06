@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -25,10 +26,13 @@ public class ToolbarController implements Initializable {
     @FXML private Button toolbarStrikethrough;
     @FXML private Button toolbarUndo;
     @FXML private Button toolbarRedo;
-    @FXML private Button toolbarEditBold;
     @FXML private Button toolbarHighlight;
-    @FXML private Button toolbarSubscript;
-    @FXML private Button toolbarSupscript;
+    @FXML
+    private AnchorPane toolbar;
+    @FXML
+    private Button toolbarHyperlink;
+    @FXML
+    private Button toolbarImage;
     /**
      * Initializes the controller class.
      * @param url
@@ -47,8 +51,11 @@ public class ToolbarController implements Initializable {
                 case "toolbarBold" -> parent.plainEditorController.edit("**");
                 case "toolbarItalic" -> parent.plainEditorController.edit("__");
                 case "toolbarUnderline" -> parent.plainEditorController.edit("<ins>", "</ins>");
+                case "toolbarHighlight" -> parent.plainEditorController.edit("==");
                 case "toolbarStrikethrough" -> parent.plainEditorController.edit("~~");
                 case "toolbarCodeblock" -> parent.plainEditorController.edit("\n```\n");
+                case "toolbarHyperlink" -> parent.plainEditorController.insertHyperlink();
+                case "toolbarImage" -> parent.plainEditorController.insertImage();
                 default -> {
                 }
             }
@@ -63,10 +70,10 @@ public class ToolbarController implements Initializable {
         toolbarItalic.setOnAction(handler);
         toolbarUnderline.setOnAction(handler);
         toolbarStrikethrough.setOnAction(handler);
+        toolbarHighlight.setOnAction(handler);
         toolbarCodeblock.setOnAction(handler);
-        // TODO
-        
-        
+        toolbarHyperlink.setOnAction(handler);
+        toolbarImage.setOnAction(handler);
     }    
     
 }

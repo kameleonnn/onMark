@@ -64,7 +64,7 @@
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
                      <image>
-                        <Image url="@../icons/i.png" />
+                        <Image url="@../icons/italic-icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -84,18 +84,45 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="toolbarHighlight" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Highlight" />
-            <Button fx:id="toolbarSubscript" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Subscript" />
-            <Button fx:id="toolbarSupscript" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Supscript" />
+            <Button fx:id="toolbarHighlight" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Highlight">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/highlight-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic></Button>
+         <Button fx:id="toolbarHeader" mnemonicParsing="false" text="Header" />
             <Button fx:id="toolbarCodeblock" contentDisplay="GRAPHIC_ONLY" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Codeblock">
                <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0">
+                  <ImageView fitHeight="25.0" fitWidth="25.0">
                      <image>
                         <Image url="@../icons/code.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
+         <Button fx:id="toolbarHyperlink" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Hyperlink">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/hyperlink-icon-1.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button fx:id="toolbarImage" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Image">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/picture-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button fx:id="toolbarHorizontal" mnemonicParsing="false" text="Horizontal line" />
+         <Button fx:id="toolbarChecklist" mnemonicParsing="false" text="Checklist" />
+         <Button fx:id="toolbarList" mnemonicParsing="false" text="Plain list" />
         </items>
       </ToolBar>
 </AnchorPane>
