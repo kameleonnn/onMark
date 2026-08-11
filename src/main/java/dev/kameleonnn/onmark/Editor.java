@@ -50,8 +50,4 @@ public class Editor {
     public static String insertImage(String url){
         return "![Alt text]("+url+")\"Title\"";
     }
-    
-    public static String insertHeader(String str){
-        return "# "+str;
-    }
 }

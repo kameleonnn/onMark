@@ -7,10 +7,8 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -69,6 +67,7 @@ public class PlainEditorController implements Initializable {
      */
     public void edit(String tag) {
         textInput.replaceSelection(Editor.wrapStr(tag, textInput.getSelectedText()));
+        textInput.requestFocus();
     }
 
     /**
@@ -80,15 +79,37 @@ public class PlainEditorController implements Initializable {
      */
     public void edit(String tag1, String tag2) {
         textInput.replaceSelection(Editor.wrapStr(tag1, tag2, textInput.getSelectedText()));
+        textInput.requestFocus();
     }
 
     public void insertHyperlink() {
         textInput.replaceSelection(Editor.insertHyperlink(textInput.getSelectedText(), "URL"));
+        textInput.requestFocus();
     }
 
     public void insertImage() {
         textInput.replaceSelection(Editor.insertImage(textInput.getSelectedText()));
+        textInput.requestFocus();
     }
+    
+    public void insertHorLine(){
+        textInput.insertText(textInput.getCaretPosition(), "\n----\n");
+        textInput.requestFocus();
+    }
+    
+    public void insertLineFeat(String feat){
+        int init_pos = textInput.getCaretPosition();
+        while(textInput.getCaretPosition()>0){
+            if(textInput.getText().charAt(textInput.getCaretPosition()-1)=='\n'){
+                break;
+            }
+            textInput.positionCaret(textInput.getCaretPosition()-1);
+        }
+        textInput.insertText(textInput.getCaretPosition(), feat);
+        textInput.positionCaret(init_pos+feat.length());
+        textInput.requestFocus();
+    }
+    
 
     /**
      * Allows to setup responsive sizing of some elements in this controller.

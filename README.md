@@ -1,38 +1,33 @@
 # onMark - a simple markdown editor
-## THIS PROJECT IS IN EARLY DEVELOPMENT. BUGS ARE TO BE EXPECTED, FEEL FREE TO OPEN AN ISSUE!!
-------
+
 ## About
-onMark is a markdown editor letting you write and edit files with a rich editor, or edit with a simple editor with a preview pane.
-
-at your disposal is a graphic interface for most markdown formatting with customizable shortcuts.
-
+onMark is a markdown editor letting you write and edit files with real-time markdown preview
 onMark is written in Java using the JavaFX GUI framework, with plans of a version written in C/C++ using WxGTK
+
+**this project is still in relatively early development. bug reports are welcome!**
 
 ### Progress tracker
 - [x] file handling
 - [x] basic text editor functionality
 - [x] edit menu/button functionality
 - [x] editor interface
-- [ ] more editor functionality!
-- [ ] recent files
-- [ ] disabling buttons on certain conditions
-- [ ] zoom
+- [x] more editor functionality!
 - [ ] markdown rendering
-- [ ] settings - shortcuts, line wrap etc.
+- [ ] zoom
+- [ ] recent files
+- [ ] **Accessibility options**, settings/preferences
 - [ ] themes
 - [ ] rich editor / editor switching
 
 ## Installation
+**you must have the JFX binaries installed to compile this program. i use azul systems' jdk with bundled JFX but there are other options as well**
 
 clone this repository:  
 ```
 git clone https://codeberg.org/kameleonnn/onMark.git
 ```  
 
-in the cloned repository:  
-```
-build java app
-```
+in the cloned repository install using maven
 
 
 please enjoy using the program!

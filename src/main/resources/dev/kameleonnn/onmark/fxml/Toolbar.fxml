@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +18,10 @@
                         <Image url="@../icons/save-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Save changes" />
+            </tooltip></Button>
             <Button fx:id="toolbarFileNew" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="New">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -25,7 +29,10 @@
                         <Image url="@../icons/empty-file-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="New file" />
+            </tooltip></Button>
             <Button fx:id="toolbarFileOpen" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Open...">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -33,7 +40,10 @@
                         <Image url="@../icons/open-file-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Open file..." />
+            </tooltip></Button>
             <Separator orientation="VERTICAL" />
             <Button fx:id="toolbarUndo" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Undo"> 
                 <graphic>
@@ -42,7 +52,10 @@
                         <Image url="@../icons/undo-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Undo" />
+            </tooltip></Button>
          <Button fx:id="toolbarRedo" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Redo">
              <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -50,7 +63,10 @@
                         <Image url="@../icons/redo-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Redo" />
+            </tooltip></Button>
          <Separator orientation="VERTICAL" />
             <Button fx:id="toolbarBold" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Bold">
                <graphic>
@@ -59,7 +75,10 @@
                         <Image url="@../icons/bold-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Bold" />
+            </tooltip></Button>
             <Button fx:id="toolbarItalic" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Italics">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -67,7 +86,10 @@
                         <Image url="@../icons/italic-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Italicise" />
+            </tooltip></Button>
             <Button fx:id="toolbarUnderline" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Underline">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -75,7 +97,10 @@
                         <Image url="@../icons/underline-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Underline" />
+            </tooltip></Button>
             <Button fx:id="toolbarStrikethrough" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Strikethrough">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -83,7 +108,10 @@
                         <Image url="@../icons/strikethrough-icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Strikethrough" />
+            </tooltip></Button>
             <Button fx:id="toolbarHighlight" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Highlight">
             <graphic>
                <ImageView fitHeight="25.0" fitWidth="25.0">
@@ -91,17 +119,21 @@
                      <Image url="@../icons/highlight-icon.png" />
                   </image>
                </ImageView>
-            </graphic></Button>
-         <Button fx:id="toolbarHeader" mnemonicParsing="false" text="Header" />
-            <Button fx:id="toolbarCodeblock" contentDisplay="GRAPHIC_ONLY" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Codeblock">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0">
-                     <image>
-                        <Image url="@../icons/code.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Highlight" />
+            </tooltip></Button>
+         <Button fx:id="toolbarHeader" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Header">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/header-icon-2.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Header" />
+            </tooltip></Button>
          <Button fx:id="toolbarHyperlink" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Hyperlink">
             <graphic>
                <ImageView fitHeight="25.0" fitWidth="25.0">
@@ -110,7 +142,32 @@
                   </image>
                </ImageView>
             </graphic>
+            <tooltip>
+               <Tooltip text="Make hyperlink" />
+            </tooltip>
          </Button>
+         <Button fx:id="toolbarList" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Plain list">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/list-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="List" />
+            </tooltip></Button>
+         <Button fx:id="toolbarChecklist" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Checklist">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../icons/checklist-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Checklist" />
+            </tooltip></Button>
          <Button fx:id="toolbarImage" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Image">
             <graphic>
                <ImageView fitHeight="25.0" fitWidth="25.0">
@@ -119,10 +176,57 @@
                   </image>
                </ImageView>
             </graphic>
+            <tooltip>
+               <Tooltip text="Insert Image" />
+            </tooltip>
          </Button>
-         <Button fx:id="toolbarHorizontal" mnemonicParsing="false" text="Horizontal line" />
-         <Button fx:id="toolbarChecklist" mnemonicParsing="false" text="Checklist" />
-         <Button fx:id="toolbarList" mnemonicParsing="false" text="Plain list" />
+         <Button fx:id="toolbarInlineCode" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Inline code">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/inline-code-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Inline Code" />
+            </tooltip>
+         </Button>
+            <Button fx:id="toolbarCodeblock" contentDisplay="GRAPHIC_ONLY" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Codeblock">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0">
+                     <image>
+                        <Image url="@../icons/codeblock-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            <tooltip>
+               <Tooltip text="Codeblock" />
+            </tooltip>
+            </Button>
+         <Button fx:id="toolbarHorizontal" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Horizontal line">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/horiz-line-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Insert Horizontal Line" />
+            </tooltip></Button>
+         <Button fx:id="toolbarQuote" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Quote">
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="25.0">
+                  <image>
+                     <Image url="@../icons/quote-icon-2.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <tooltip>
+               <Tooltip text="Quote" />
+            </tooltip>
+         </Button>
         </items>
       </ToolBar>
 </AnchorPane>

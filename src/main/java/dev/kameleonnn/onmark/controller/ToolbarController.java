@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author szef
+ * @author kameleonnn
  */
 public class ToolbarController implements Initializable {
     public MainWinController parent;
@@ -27,12 +27,15 @@ public class ToolbarController implements Initializable {
     @FXML private Button toolbarUndo;
     @FXML private Button toolbarRedo;
     @FXML private Button toolbarHighlight;
-    @FXML
-    private AnchorPane toolbar;
-    @FXML
-    private Button toolbarHyperlink;
-    @FXML
-    private Button toolbarImage;
+    @FXML private AnchorPane toolbar;
+    @FXML private Button toolbarHyperlink;
+    @FXML private Button toolbarImage;
+    @FXML private Button toolbarHeader;
+    @FXML private Button toolbarList;
+    @FXML private Button toolbarChecklist;
+    @FXML private Button toolbarInlineCode;
+    @FXML private Button toolbarHorizontal;
+    @FXML private Button toolbarQuote;
     /**
      * Initializes the controller class.
      * @param url
@@ -53,9 +56,15 @@ public class ToolbarController implements Initializable {
                 case "toolbarUnderline" -> parent.plainEditorController.edit("<ins>", "</ins>");
                 case "toolbarHighlight" -> parent.plainEditorController.edit("==");
                 case "toolbarStrikethrough" -> parent.plainEditorController.edit("~~");
+                case "toolbarInlineCode" -> parent.plainEditorController.edit("`");
                 case "toolbarCodeblock" -> parent.plainEditorController.edit("\n```\n");
                 case "toolbarHyperlink" -> parent.plainEditorController.insertHyperlink();
                 case "toolbarImage" -> parent.plainEditorController.insertImage();
+                case "toolbarHorizontal" -> parent.plainEditorController.insertHorLine();
+                case "toolbarHeader" -> parent.plainEditorController.insertLineFeat("# ");
+                case "toolbarQuote" -> parent.plainEditorController.insertLineFeat("> ");
+                case "toolbarList" -> parent.plainEditorController.insertLineFeat("- ");
+                case "toolbarChecklist" -> parent.plainEditorController.insertLineFeat("-[ ] ");
                 default -> {
                 }
             }
@@ -71,9 +80,15 @@ public class ToolbarController implements Initializable {
         toolbarUnderline.setOnAction(handler);
         toolbarStrikethrough.setOnAction(handler);
         toolbarHighlight.setOnAction(handler);
+        toolbarInlineCode.setOnAction(handler);
         toolbarCodeblock.setOnAction(handler);
         toolbarHyperlink.setOnAction(handler);
         toolbarImage.setOnAction(handler);
+        toolbarHorizontal.setOnAction(handler);
+        toolbarHeader.setOnAction(handler);
+        toolbarQuote.setOnAction(handler);
+        toolbarList.setOnAction(handler);
+        toolbarChecklist.setOnAction(handler);
     }    
     
 }
