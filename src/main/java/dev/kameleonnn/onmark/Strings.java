@@ -31,6 +31,10 @@ public enum Strings {
     FILE_SAVE_ERROR("An error occured while saving file."),
     FILE_SAVE_SUCCESS("File was saved successfully."),
     
+    BROWSER_OPEN_FAIL("Program could not open the browser. Copy the link below and paste it to you browser manually: \n"),
+    CB_ISSUES("https://codeberg.org/kameleonnn/onMark/issues"),
+    GH_ISSUES("https://github.com/kameleonnn/onMark/issues")
+    
     ;
     
     @SuppressWarnings("unused")

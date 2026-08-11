@@ -4,6 +4,7 @@ module dev.kameleonnn.onmark {
     requires javafx.web;
     requires java.logging;
     requires java.base;
+    requires java.desktop;
 
     opens dev.kameleonnn.onmark to javafx.fxml;
     opens dev.kameleonnn.onmark.controller;
