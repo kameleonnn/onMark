@@ -17,8 +17,8 @@
             <fx:include fx:id="menuEdit" source="MenuEdit.fxml" />
             <Menu fx:id="menuView" mnemonicParsing="false" text="View">
                <items>
-                  <CheckMenuItem id="viewEditor" mnemonicParsing="false" selected="true" text="Show editor" />
-                  <CheckMenuItem id="viewPreview" mnemonicParsing="false" text="Show preview" />
+                  <CheckMenuItem id="viewEditor" fx:id="menuViewEditor" mnemonicParsing="false" selected="true" text="Show editor" />
+                  <CheckMenuItem id="viewPreview" fx:id="menuViewPreview" mnemonicParsing="false" selected="true" text="Show preview" />
                </items></Menu>
             <Menu fx:id="menuSettings" mnemonicParsing="false" text="onMark">
                <items>
@@ -70,7 +70,7 @@
          </menus>
       </MenuBar>
       <fx:include fx:id="toolbar" source="Toolbar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
-      <SplitPane dividerPositions="0.5" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
+      <SplitPane fx:id="splitView" dividerPositions="0.5" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <items>
             <fx:include fx:id="plainEditor" source="PlainEditor.fxml" />
             <fx:include fx:id="renderPreview" source="RenderPreview.fxml" />

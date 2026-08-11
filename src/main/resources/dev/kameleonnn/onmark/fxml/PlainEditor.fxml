@@ -11,8 +11,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<ScrollPane fx:id="plainEditor" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.PlainEditorController">
+<ScrollPane fx:id="plainEditor" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.PlainEditorController">
     <content>
-        <TextArea fx:id="textInput" prefHeight="200.0" prefWidth="200.0" />
+        <TextArea fx:id="textInput"/>
     </content>
 </ScrollPane>

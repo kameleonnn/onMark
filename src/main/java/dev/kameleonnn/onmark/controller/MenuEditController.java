@@ -11,7 +11,7 @@ import javafx.scene.control.MenuItem;
 /**
  * FXML Controller class
  *
- * @author szef
+ * @author kameleonnn
  */
 public class MenuEditController implements Initializable {
     public MainWinController parent;

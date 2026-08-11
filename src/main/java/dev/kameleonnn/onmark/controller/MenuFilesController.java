@@ -17,7 +17,7 @@ import javafx.stage.FileChooser;
 /**
  * FXML Controller class
  *
- * @author szef
+ * @author kameleonnn
  */
 public class MenuFilesController implements Initializable {
 

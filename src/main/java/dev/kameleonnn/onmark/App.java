@@ -33,7 +33,9 @@ public class App extends Application {
      * @param args arguments form terminal/command line execution.
      */
     public static void main(String[] args) {
-        scene = new Scene(loadFXML(FXML));
+        Platform.runLater(() -> {
+            scene = new Scene(loadFXML(FXML));
+        });
         launch();
     }
 
