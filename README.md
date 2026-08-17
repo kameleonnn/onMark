@@ -12,9 +12,9 @@ onMark is written in Java using the JavaFX GUI framework, with plans of a versio
 - [x] edit menu/button functionality
 - [x] editor interface
 - [x] more editor functionality!
-- [ ] markdown rendering
-- [ ] zoom
+- [x] markdown rendering
 - [ ] recent files
+- [ ] zoom
 - [ ] **Accessibility options**, settings/preferences
 - [ ] themes
 - [ ] rich editor / editor switching
@@ -29,5 +29,7 @@ git clone https://codeberg.org/kameleonnn/onMark.git
 
 in the cloned repository install using maven
 
-
 please enjoy using the program!
+
+### Credits
+this project uses [commonmark-java](https://github.com/commonmark/commonmark-java) for markdown parsing and HTML rendering
