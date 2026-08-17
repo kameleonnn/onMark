@@ -60,7 +60,7 @@ public class MenuEditController implements Initializable {
                 case "menuEditBold" ->
                     parent.plainEditorController.edit("**");
                 case "menuEditItalic" ->
-                    parent.plainEditorController.edit("__");
+                    parent.plainEditorController.edit("_");
                 case "menuEditUnderline" ->
                     parent.plainEditorController.edit("<ins>", "</ins");
                 case "menuEditStrikethrough" ->

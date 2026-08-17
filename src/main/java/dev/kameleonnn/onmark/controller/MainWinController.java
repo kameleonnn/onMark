@@ -32,6 +32,7 @@ public class MainWinController implements Initializable {
     public MenuEditController menuEditController;
     public ToolbarController toolbarController;
     public PlainEditorController plainEditorController;
+    public RenderPreviewController renderPreviewController;
     //@FXML
     private Stage aboutWindow;
     private Stage settingsWindow;
@@ -72,6 +73,7 @@ public class MainWinController implements Initializable {
         menuEditController.parent = this;
         plainEditorController.parent = this;
         toolbarController.parent = this;
+        renderPreviewController.parent = this;
 
         EventHandler<ActionEvent> handler = (ActionEvent event) -> {
             switch (((MenuItem) event.getSource()).getId()) {
@@ -118,6 +120,10 @@ public class MainWinController implements Initializable {
         } else {
             splitView.getItems().remove(pane);
         }
+    }
+    
+    public ScrollPane getRenderPreview(){
+        return this.renderPreview;
     }
 
 }

@@ -128,7 +128,7 @@ public class MenuFilesController implements Initializable {
             fileChooser.setTitle("New file...");
             saveInNewFile();
         } else {
-            if (!FileRW.save(App.data, App.filename)) {
+            if (!FileRW.save(parent.plainEditorController.passText(), App.filename)) {
                 App.errorAlert(Strings.FILE_SAVE_ERROR.text);
             } else {
                 App.data = parent.plainEditorController.passText();

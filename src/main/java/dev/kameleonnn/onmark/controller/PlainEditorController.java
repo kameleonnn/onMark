@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -32,6 +34,19 @@ public class PlainEditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupRespSize();
+        textInput.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
+            App.saved = textInput.getText().equals(App.data);
+            if (parent.getRenderPreview().isVisible()){
+                parent.renderPreviewController.MDtoHTML();
+            }
+        });
+        
+        textInput.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if(event.getCode() == KeyCode.ENTER){
+                textInput.insertText(textInput.getCaretPosition(), "  ");
+                textInput.positionCaret(textInput.getCaretPosition()+1);
+            }
+        });
 
     }
 
@@ -127,15 +142,7 @@ public class PlainEditorController implements Initializable {
             textInput.clear();
         }
         textInput.setText(App.data);
-        App.saved = true;
-        textInput.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
-            if (textInput.getText().equals(App.data)) {
-                App.saved = true;
-            } else {
-                App.saved = false;
-            }
-            //if render pane is on then update it
-        });
+        App.saved = true;  
     }
 
     /**
