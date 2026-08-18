@@ -53,8 +53,8 @@ public class ToolbarController implements Initializable {
                 case "toolbarRedo" -> parent.plainEditorController.ctrl("redo");
                 case "toolbarBold" -> parent.plainEditorController.edit("**");
                 case "toolbarItalic" -> parent.plainEditorController.edit("__");
-                case "toolbarUnderline" -> parent.plainEditorController.edit("<ins>", "</ins>");
-                case "toolbarHighlight" -> parent.plainEditorController.edit("==");
+                case "toolbarUnderline" -> parent.plainEditorController.edit("++");
+                case "toolbarHighlight" -> parent.plainEditorController.edit("<mark>","</mark>");
                 case "toolbarStrikethrough" -> parent.plainEditorController.edit("~~");
                 case "toolbarInlineCode" -> parent.plainEditorController.edit("`");
                 case "toolbarCodeblock" -> parent.plainEditorController.edit("\n```\n");
