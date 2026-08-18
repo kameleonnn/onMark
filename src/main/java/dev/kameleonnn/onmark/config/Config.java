@@ -1,5 +1,7 @@
-package dev.kameleonnn.onmark;
+package dev.kameleonnn.onmark.config;
 
+import dev.kameleonnn.onmark.FileRW;
+import dev.kameleonnn.onmark.Strings;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

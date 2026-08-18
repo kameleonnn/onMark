@@ -1,8 +1,9 @@
-package dev.kameleonnn.onmark;
+package dev.kameleonnn.onmark.config;
 
+import dev.kameleonnn.onmark.Strings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import dev.kameleonnn.onmark.Config;
+import dev.kameleonnn.onmark.config.Config;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 /**

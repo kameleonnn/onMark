@@ -50,19 +50,18 @@ public class FileRW {
      * @param filename
      * @return 'true' if entire file was read successfully
      */
-    public static boolean readFile(String filename){
+    public static String readFile(String filename){
         try (BufferedReader dataRead = new BufferedReader( new FileReader(filename))) {
-            String line;
-            App.data="";
+            String line, target = "";
             while((line=dataRead.readLine())!=null){
                 if(!line.equals("")){
-                    App.data = App.data + line+"\n";
+                    target = target + line+"\n"; //change this to use string builder
                 }
             }
-            return true;
+            return target;
         } catch (IOException ex) {
             System.getLogger(FileRW.class.getName()).log(System.Logger.Level.ERROR, Strings.FILE_OPEN_ERROR.text, ex);
-            return false;
+            return null;
         }
     }
     
@@ -78,7 +77,7 @@ public class FileRW {
             for(int i=0;i<data.length();i++){
                     dataWrite.write(data.charAt(i));
             }
-            return App.saved=true;
+            return true;
         } catch (IOException ex) {
             System.getLogger(FileRW.class.getName()).log(System.Logger.Level.ERROR, Strings.FILE_SAVE_ERROR.text, ex);
             return false;
@@ -95,7 +94,7 @@ public class FileRW {
     }
 
     /**
-     * closes currently opened file
+     * "closes" file currently opened in editor
      */
     public static void closeFile(){
         App.data = "";

@@ -25,7 +25,6 @@ public class App extends Application {
     public static String filename = "";
     public static String data = "";
     public static boolean saved = true;
-    private static final String[] recent = new String[6];
 
     /**
      * Main function
@@ -96,6 +95,7 @@ public class App extends Application {
             Optional<ButtonType> option = savePrompt.showAndWait();
             if (option.get() == ButtonType.YES) {
                 if (FileRW.save(App.data, App.filename)) {
+                    App.saved = true;
                     FileRW.closeFile();
                 } else {
                     Alert error = new Alert(Alert.AlertType.ERROR);
@@ -123,17 +123,6 @@ public class App extends Application {
         Alert error = new Alert(Alert.AlertType.ERROR);
         error.setContentText(msg);
         error.show();
-    }
-
-    /**
-     * changes recently opened files listed in
-     * MainWinController.menuFileOpenRecents
-     */
-    public static void changeRecents() {
-        if (recent[0] != null) {
-            System.arraycopy(recent, 0, recent, 1, 5);
-        }
-        recent[0] = filename;
     }
 
     public static void setWindowTitle(String title) {

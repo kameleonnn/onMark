@@ -3,6 +3,7 @@ package dev.kameleonnn.onmark.controller;
 import dev.kameleonnn.onmark.App;
 import dev.kameleonnn.onmark.FileRW;
 import dev.kameleonnn.onmark.Strings;
+import dev.kameleonnn.onmark.config.Recents;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -94,7 +95,9 @@ public class MenuFilesController implements Initializable {
     public void closeFile() {
         App.saveCheck();
         if (App.saved) {
-            App.changeRecents();
+            // TODO
+            FileRW.closeFile();
+            Recents.changeRecents();
             parent.plainEditorController.clearEditor();
             App.setWindowTitle("");
         }
@@ -108,9 +111,10 @@ public class MenuFilesController implements Initializable {
         if (file != null) {
             App.filename = file.getAbsolutePath();
             if (FileRW.checkIfFileCanOpen(App.filename)) {
-                if (FileRW.readFile(App.filename)) {
+                if ((App.data=FileRW.readFile(App.filename))!=null) {
+                    App.saved=true;
                     App.setWindowTitle(" - " + App.filename);
-                    App.changeRecents();
+                    Recents.changeRecents();
                     parent.plainEditorController.loadFileConts();
                 } else {
                     App.errorAlert(Strings.FILE_LOAD_ERROR.text);
@@ -131,9 +135,11 @@ public class MenuFilesController implements Initializable {
             saveInNewFile();
         } else {
             if (!FileRW.save(parent.plainEditorController.passText(), App.filename)) {
+                App.saved = false;
                 App.errorAlert(Strings.FILE_SAVE_ERROR.text);
             } else {
                 App.data = parent.plainEditorController.passText();
+                App.saved = true;
             }
         }
     }
@@ -154,9 +160,11 @@ public class MenuFilesController implements Initializable {
         fileChooser.setInitialFileName(App.filename);
         File file = fileChooser.showSaveDialog(App.scene.getWindow());
         if ((file != null) && (FileRW.save(App.data=parent.plainEditorController.passText(), App.filename=file.getAbsolutePath()+getExtension()))) {
+            App.saved = true;
             App.setWindowTitle(" - " + App.filename);
-            App.changeRecents();
+            Recents.changeRecents();
         } else {
+            App.saved = false;
             App.errorAlert(Strings.FILE_SAVE_ERROR.text);
         }
     }
