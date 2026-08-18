@@ -1,6 +1,7 @@
 package dev.kameleonnn.onmark.controller;
 
 import dev.kameleonnn.onmark.App;
+import dev.kameleonnn.onmark.highlight.HighlightNodeRenderer;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import org.commonmark.Extension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.task.list.items.TaskListItemsExtension;
 import org.commonmark.ext.ins.InsExtension;
+import org.commonmark.renderer.html.HtmlNodeRendererContext;
 
 /**
  * FXML Controller class
@@ -30,8 +32,12 @@ public class RenderPreviewController implements Initializable {
     public MainWinController parent;
     private final List<Extension> extensions = List.of(InsExtension.create(),StrikethroughExtension.create(), TaskListItemsExtension.create());
     private final Parser parser = Parser.builder().extensions(extensions).build();
-    private final HtmlRenderer render = HtmlRenderer.builder().extensions(extensions).build();
+    private final HtmlRenderer render;
     private Node document;
+
+    public RenderPreviewController() {
+        this.render = HtmlRenderer.builder().nodeRendererFactory((HtmlNodeRendererContext context) -> new HighlightNodeRenderer(context)).extensions(extensions).build();
+    }
 
     /**
      * Initializes the controller class.
@@ -43,7 +49,6 @@ public class RenderPreviewController implements Initializable {
         engine = previewWeb.getEngine();
 
         engine.locationProperty().addListener((ObservableValue<? extends String> observable, String oldVal, String newVal) -> {
-            System.out.print(previewWeb.getEngine().getLocation());
             if(!engine.getLocation().equals("")){
                 App.openLink(engine.getLocation());
                 MDtoHTML();

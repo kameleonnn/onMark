@@ -42,10 +42,11 @@ public class MenuFilesController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md"),
@@ -53,7 +54,7 @@ public class MenuFilesController implements Initializable {
                 new FileChooser.ExtensionFilter("All types", "*")
         );
 
-        EventHandler<ActionEvent> handler = event -> {
+        EventHandler<ActionEvent> handler = (ActionEvent event) -> {
             switch (((MenuItem) event.getSource()).getId()) {
                 case "menuFileSave" ->
                     saveFile();
@@ -76,6 +77,7 @@ public class MenuFilesController implements Initializable {
                     }
                 }
                 default -> {
+                    break;
                 }
             }
         };

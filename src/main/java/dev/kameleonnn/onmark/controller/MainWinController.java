@@ -96,6 +96,7 @@ public class MainWinController implements Initializable {
                     App.webhost.showDocument(Strings.GH_ISSUES.text);
                 }
                 default -> {
+                    break;
                 }
             }
         };
@@ -115,7 +116,7 @@ public class MainWinController implements Initializable {
     private void paneVisibility(ScrollPane pane, boolean state) {
         pane.setDisable(!state);
         pane.setVisible(state);
-        if (state == true) {
+        if (state) {
             splitView.getItems().add(pane);
         } else {
             splitView.getItems().remove(pane);

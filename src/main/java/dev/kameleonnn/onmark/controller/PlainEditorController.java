@@ -19,11 +19,9 @@ import javafx.scene.input.KeyEvent;
  */
 public class PlainEditorController implements Initializable {
 
-    public MainWinController parent;
-    @FXML
-    private ScrollPane plainEditor;
-    @FXML
-    private TextArea textInput;
+    public MainWinController parent; // set from MainWinController
+    @FXML private ScrollPane plainEditor;
+    @FXML private TextArea textInput;
 
     /**
      * Initializes the controller class.
@@ -44,7 +42,6 @@ public class PlainEditorController implements Initializable {
         textInput.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.ENTER){
                 textInput.insertText(textInput.getCaretPosition(), "  ");
-                textInput.positionCaret(textInput.getCaretPosition()+1);
             }
         });
 
@@ -52,7 +49,6 @@ public class PlainEditorController implements Initializable {
 
     /**
      * allows Ctrl+[key] usage through UI elements
-     *
      * @param op
      */
     public void ctrl(String op) {
@@ -70,6 +66,7 @@ public class PlainEditorController implements Initializable {
             case "redo" ->
                 textInput.redo();
             default -> {
+                break;
             }
         }
     }
@@ -108,23 +105,25 @@ public class PlainEditorController implements Initializable {
     }
     
     public void insertHorLine(){
-        textInput.insertText(textInput.getCaretPosition(), "\n----\n");
+        textInput.insertText(textInput.getCaretPosition(), "  \n----  \n");
         textInput.requestFocus();
     }
     
     public void insertLineFeat(String feat){
         int init_pos = textInput.getCaretPosition();
-        while(textInput.getCaretPosition()>0){
-            if(textInput.getText().charAt(textInput.getCaretPosition()-1)=='\n'){
-                break;
-            }
-            textInput.positionCaret(textInput.getCaretPosition()-1);
+        int caret=init_pos;
+        String text = textInput.getText();
+        while(caret>0){
+            if(text.charAt(caret-1)=='\n'){ break;}
+            caret--;
         }
-        textInput.insertText(textInput.getCaretPosition(), feat);
+        if(text.substring(caret, init_pos).length()!=0 && text.charAt(caret)=='#'){
+            feat="#"; 
+        }
+        textInput.insertText(caret, feat);
         textInput.positionCaret(init_pos+feat.length());
         textInput.requestFocus();
     }
-    
 
     /**
      * Allows to setup responsive sizing of some elements in this controller.
@@ -152,6 +151,9 @@ public class PlainEditorController implements Initializable {
         textInput.clear();
     }
 
+    /*
+    * getter method for editor contents
+    */
     public String passText() {
         return textInput.getText();
     }

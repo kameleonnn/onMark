@@ -13,16 +13,15 @@ import java.nio.file.Files;
  * @author kameleonnn
  */
 public class FileRW {
-
-    public FileRW(File file) {
-    }
+    
+    private FileRW(){}
     
     /**
      * Creates new file from default values
      * @param filename string
      * @return 'true' if file was created successfully
      */
-    public boolean createFile(String filename){
+    public static boolean createFile(String filename){
         try {
             return new File(filename).createNewFile();
         } catch (IOException ex) {

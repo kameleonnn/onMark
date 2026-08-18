@@ -12,6 +12,9 @@ public enum Strings {
     
     //config
     CONFIG_FILE("onmark-config.properties"),
+    CONFIG_RECENTS("recent-files.txt"),
+    CONFIG_USER_THEMES("themes"),
+    CONFIG_CREATE_ERROR("An error occured creating configuration file(s)"),
     CONFIG_SAVE_ERROR("An error occured saving configuration."),
     
     // files

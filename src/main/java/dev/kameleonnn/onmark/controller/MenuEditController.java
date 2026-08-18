@@ -42,8 +42,7 @@ public class MenuEditController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        EventHandler<ActionEvent> handler = event -> {
+        EventHandler<ActionEvent> handler = (ActionEvent event) -> {
             switch (((MenuItem) event.getSource()).getId()) {
                 case "menuEditCopy" ->
                     parent.plainEditorController.ctrl("copy");
@@ -74,6 +73,7 @@ public class MenuEditController implements Initializable {
                     parent.plainEditorController.insertHyperlink();
                 }
                 default -> {
+                    break;
                 }
             }
         }  ;
@@ -85,6 +85,5 @@ public class MenuEditController implements Initializable {
         menuEditSelectAll.setOnAction(handler);
         menuEditUndo.setOnAction(handler);
         menuEditRedo.setOnAction(handler);
-        //menuEditCodeblock.setOnAction(handler);
     }
 }

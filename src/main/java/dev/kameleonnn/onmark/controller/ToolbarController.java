@@ -44,7 +44,7 @@ public class ToolbarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        EventHandler<ActionEvent> handler = event -> {
+        EventHandler<ActionEvent> handler = (ActionEvent event) -> {
             switch (((Button) event.getSource()).getId()) {
                 case "toolbarFileSave" -> parent.menuFilesController.saveFile();
                 case "toolbarFileNew" -> parent.menuFilesController.newFile();
@@ -64,8 +64,9 @@ public class ToolbarController implements Initializable {
                 case "toolbarHeader" -> parent.plainEditorController.insertLineFeat("# ");
                 case "toolbarQuote" -> parent.plainEditorController.insertLineFeat("> ");
                 case "toolbarList" -> parent.plainEditorController.insertLineFeat("- ");
-                case "toolbarChecklist" -> parent.plainEditorController.insertLineFeat("-[ ] ");
+                case "toolbarChecklist" -> parent.plainEditorController.insertLineFeat("- [ ] ");
                 default -> {
+                    break;
                 }
             }
         };

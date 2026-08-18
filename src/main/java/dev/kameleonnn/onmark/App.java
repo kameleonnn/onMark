@@ -20,12 +20,12 @@ import javafx.stage.WindowEvent;
  */
 public class App extends Application {
     public static HostServices webhost;
-    static final String FXML = "fxml/MainWin.fxml";
+    private static final String FXML = "fxml/MainWin.fxml";
     public static Scene scene;
     public static String filename = "";
     public static String data = "";
     public static boolean saved = true;
-    public static String[] recent = new String[6];
+    private static final String[] recent = new String[6];
 
     /**
      * Main function
@@ -36,6 +36,8 @@ public class App extends Application {
         Platform.runLater(() -> {
             scene = new Scene(loadFXML(FXML));
         });
+        System.out.print(System.getProperty("os.name"));
+        
         launch();
     }
 
