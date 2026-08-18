@@ -151,10 +151,7 @@ public class MenuFilesController implements Initializable {
     private void saveInNewFile() {
         fileChooser.setInitialFileName(App.filename);
         File file = fileChooser.showSaveDialog(App.scene.getWindow());
-        if ((file != null) && (FileRW.save(App.data, file.getAbsolutePath()))) {
-            App.filename = file.getAbsolutePath() + getExtension();
-            App.data = parent.plainEditorController.passText();
-            FileRW.save(App.data, App.filename);
+        if ((file != null) && (FileRW.save(App.data=parent.plainEditorController.passText(), App.filename=file.getAbsolutePath()+getExtension()))) {
             App.setWindowTitle(" - " + App.filename);
             App.changeRecents();
         } else {
