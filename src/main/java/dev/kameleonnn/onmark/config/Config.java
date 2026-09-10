@@ -1,11 +1,9 @@
 package dev.kameleonnn.onmark.config;
 
-import dev.kameleonnn.onmark.util.FileRW;
 import dev.kameleonnn.onmark.util.Strings;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +12,6 @@ import java.util.logging.Logger;
  * @author kameleonnn
  */
 public class Config {
-
     private static final Config instance = new Config();
     private static Path configDir = null;
 
@@ -25,15 +22,21 @@ public class Config {
         return instance;
     }
 
-    public static void createConfigFiles() {
-        String baseDir = configDir + System.getProperty("file.separator");
-        try {
-            FileRW.createFile(baseDir + Strings.CONFIG_FILE.text);
-            FileRW.createFile(baseDir + Strings.CONFIG_RECENTS.text);
-            Files.createDirectory(Paths.get(baseDir + Strings.CONFIG_USER_THEMES.text));
-        } catch (IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+    public static void configInit(){
+        getConfigDir();
+        if(!Files.exists(configDir.resolve(Strings.CONFIG_FILE.text))){
+            try {
+                Files.copy(Path.of("defaults", "default_config.properties"), configDir.resolve(Strings.CONFIG_FILE.text));
+            } catch (IOException ex) {
+                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            readConfig();
         }
+    }
+    
+    public static void readConfig(){
+        
     }
 
     public static Path getConfigDir() {
@@ -43,7 +46,7 @@ public class Config {
         return configDir;
     }
 
-    public static void createConfigDir() {
+    private static void createConfigDir() {
         String os_name = System.getProperty("os.name").toLowerCase();
         if (os_name.contains("nix") || os_name.contains("nux")) {
             configDir = Path.of(System.getProperty("user.home"), ".config", "onMark");

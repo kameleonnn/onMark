@@ -1,5 +1,7 @@
 package dev.kameleonnn.onmark;
 
+import dev.kameleonnn.onmark.config.Config;
+import dev.kameleonnn.onmark.config.Recents;
 import dev.kameleonnn.onmark.util.Strings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +26,8 @@ public class App extends Application {
      * @param args arguments form terminal/command line execution.
      */
     public static void main(String[] args) {
+        Config.configInit();
+        Recents.recentsInit();
         launch();
     }
 
@@ -31,6 +35,7 @@ public class App extends Application {
      * Closes the program upon user request
      */
     public static void close() {
+        Recents.writeRecents();
         System.exit(0);
     }
 

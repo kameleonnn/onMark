@@ -1,6 +1,11 @@
 package dev.kameleonnn.onmark.config;
 
-import dev.kameleonnn.onmark.AppState;
+import dev.kameleonnn.onmark.util.FileRW;
+import dev.kameleonnn.onmark.util.Strings;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -8,26 +13,51 @@ import dev.kameleonnn.onmark.AppState;
  */
 public class Recents {
     
-    public static final String[] recent = new String[20];
-    private static final Recents instance = new Recents();
+    private static final ArrayList<String> recent = new ArrayList<>();
     
     private Recents(){
+        throw new IllegalStateException("This is a utility class");
     }
-    public static Recents getInstance(){
-	return instance;
+    
+    public static void recentsInit(){
+        if(!Files.exists(Config.getConfigDir().resolve(Strings.CONFIG_RECENTS.text))){
+            FileRW.createFile(Config.getConfigDir().resolve(Strings.CONFIG_FILE.text).toString());
+        } else {
+            readRecents();
+        }
+    }
+    
+    public static List<String> getRecents(){
+        return recent;
+    }
+    
+    private static void readRecents(){
+        String[] read = FileRW.readFile(Config.getConfigDir().resolve(Strings.CONFIG_RECENTS.text).toString()).split(System.lineSeparator());
+        recent.addAll(Arrays.asList(read));
+
+    }
+
+    public static void writeRecents(){
+        StringBuilder builder = new StringBuilder();
+        for(String item : recent){
+            builder=builder.append(item).append(System.lineSeparator());
+        }
+        FileRW.save(builder.toString(), Config.getConfigDir().resolve(Strings.CONFIG_RECENTS.text).toString());
     }
 
      /**
      * changes recently opened files listed in
      * MainWinController.menuFileOpenRecents
      */
-    public static void changeRecents() {
-        if (recent[0] != null) {
-            System.arraycopy(recent, 0, recent, 1, 19);
+    public static boolean newItem(String filename) {
+        if(recent.contains(filename)){
+            return false;
         }
-        recent[0] = AppState.getFilename();
+        recent.add(filename);
+        return true;
     }
     
-    // when saving recents -> turn them all into one string, use string builder
-    // when reading recents -> split big string into separate ones, use string builder
+    public static void removeItem(int index){
+        recent.remove(index);
+    }
 }

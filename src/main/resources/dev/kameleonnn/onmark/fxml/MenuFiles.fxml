@@ -60,7 +60,6 @@
         </MenuItem>
         <Menu fx:id="menuFileOpenRecent" mnemonicParsing="false" text="Open recent...">
             <items>
-                <MenuItem fx:id="fileRecent1" mnemonicParsing="false" text="1" />
                 <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem fx:id="menuRecentClear" mnemonicParsing="false" text="Clear Recents" />
             </items>

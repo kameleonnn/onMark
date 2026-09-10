@@ -16,6 +16,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import dev.kameleonnn.onmark.util.UtilsUI;
+import javafx.application.Platform;
 
 /**
  * FXML Controller class
@@ -28,7 +29,7 @@ public class MenuFilesController implements Initializable {
     @FXML
     private Menu menuFileOpenRecent;
     @FXML
-    private MenuItem fileRecent1;
+    private MenuItem menuRecentClear;
     @FXML
     private MenuItem menuFileSaveAs;
     @FXML
@@ -45,11 +46,16 @@ public class MenuFilesController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        for (String recent : Recents.getRecents()) {
+            addToRecents(recent);
+        }
+
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md"),
@@ -64,20 +70,20 @@ public class MenuFilesController implements Initializable {
                 case "menuFileNew" ->
                     newFile();
                 case "menuFileOpen" ->
-                    openFile();
+                    chooseFile();
                 case "buttonFileOpen" ->
-                    openFile();
+                    chooseFile();
                 case "menuFileClose" ->
                     closeFile();
                 case "menuFileSaveAs" -> {
-                    fileChooser.setTitle("Save as...");
                     saveInNewFile();
                 }
+                case "menuRecentClear" -> {
+                    clearRecents();
+                }
                 case "menuAppClose" -> {
-                    UtilsUI.saveCheck();
-                    if (AppState.isSaved()) {
-                        App.close();
-                    }
+                    closeFile();
+                    App.close();
                 }
                 default -> {
                     break;
@@ -91,41 +97,78 @@ public class MenuFilesController implements Initializable {
         menuFileSave.setOnAction(handler);
         menuFileNew.setOnAction(handler);
         menuFileOpen.setOnAction(handler);
+        menuRecentClear.setOnAction(handler);
+
+    }
+
+    private void addToRecents(String filename) {
+        MenuItem newItem = new MenuItem();
+        newItem.setText(filename.strip());
+        newItem.getProperties().put("isRecent", true);
+        newItem.setOnAction((ActionEvent e) -> {
+            openFile(filename);
+        });
+        menuFileOpenRecent.getItems().addFirst(newItem);
+    }
+
+    private void removeRecent(String filename) {
+        int index = Recents.getRecents().indexOf(filename);
+        if (index != -1) {
+            menuFileOpenRecent.getItems().remove(index);
+            Recents.removeItem(index);
+        }
+    }
+
+    private void clearRecents() {
+        Platform.runLater(() -> {
+            menuFileOpenRecent.getItems().removeIf(item -> Boolean.TRUE.equals(item.getProperties().get("isRecent")));
+            Recents.getRecents().clear();
+        });
 
     }
 
     public void closeFile() {
         UtilsUI.saveCheck();
         if (AppState.isSaved()) {
-            // TODO
+            Recents.newItem(AppState.getFilename());
+            addToRecents(AppState.getFilename());
             FileRW.closeFile();
-            Recents.changeRecents();
             parent.plainEditorController.clearEditor();
-            UtilsUI.setWindowTitle(parent.getRoot(),"");
+            UtilsUI.setWindowTitle(parent.getRoot(), "");
         }
     }
-
+    
     /**
      * opens file and prepares program for use
      */
-    public void openFile() {
+    private void openFile(String filename) {
+        if ((!AppState.getFilename().equals(filename)
+                && !AppState.getFilename().equals(""))
+                && Recents.newItem(AppState.getFilename())) {
+            addToRecents(AppState.getFilename());
+        }
+        AppState.setFilename(filename);
+        if (FileRW.checkIfFileCanOpen(filename)) {
+            AppState.setData(FileRW.readFile(filename));
+            if (AppState.getData() != null) {
+                AppState.setSaved(true);
+                UtilsUI.setWindowTitle(parent.getRoot(), " - " + filename);
+                removeRecent(AppState.getFilename());
+                parent.plainEditorController.loadFileConts();
+            } else {
+                UtilsUI.errorAlert(Strings.FILE_LOAD_ERROR.text);
+            }
+        } else {
+            UtilsUI.errorAlert(Strings.FILE_OPEN_ERROR.text);
+        }
+    }
+
+    
+    public void chooseFile() {
+        fileChooser.setTitle("Open file");
         File file = fileChooser.showOpenDialog(parent.getRoot().getScene().getWindow());
         if (file != null) {
-            AppState.setFilename(file.getAbsolutePath());
-            if (FileRW.checkIfFileCanOpen(AppState.getFilename())) {
-                AppState.setData(FileRW.readFile(AppState.getFilename()));
-                if (AppState.getData()!=null) {
-                    AppState.setSaved(true);
-                    UtilsUI.setWindowTitle(parent.getRoot() ," - " + AppState.getFilename());
-                    Recents.changeRecents();
-                    parent.plainEditorController.loadFileConts();
-                } else {
-                    UtilsUI.errorAlert(Strings.FILE_LOAD_ERROR.text);   
-                }
-            } else {
-                UtilsUI.errorAlert(Strings.FILE_OPEN_ERROR.text);
-            }
-
+            openFile(file.getAbsolutePath());
         }
     }
 
@@ -160,14 +203,14 @@ public class MenuFilesController implements Initializable {
     }
 
     private void saveInNewFile() {
+        fileChooser.setTitle("Save as...");
         fileChooser.setInitialFileName(AppState.getFilename());
         File file = fileChooser.showSaveDialog(parent.getRoot().getScene().getWindow());
-        AppState.setFilename(file.getAbsolutePath()+getExtension());
+        AppState.setFilename(file.getAbsolutePath() + getExtension());
         AppState.setData(parent.plainEditorController.passText());
         if (FileRW.save(AppState.getData(), AppState.getFilename())) {
             AppState.setSaved(true);
             UtilsUI.setWindowTitle(parent.getRoot(), " - " + AppState.getFilename());
-            Recents.changeRecents();
         } else {
             AppState.setSaved(false);
             UtilsUI.errorAlert(Strings.FILE_SAVE_ERROR.text);

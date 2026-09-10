@@ -48,7 +48,7 @@ public class ToolbarController implements Initializable {
             switch (((Button) event.getSource()).getId()) {
                 case "toolbarFileSave" -> parent.menuFilesController.saveFile();
                 case "toolbarFileNew" -> parent.menuFilesController.newFile();
-                case "toolbarFileOpen" -> parent.menuFilesController.openFile();
+                case "toolbarFileOpen" -> parent.menuFilesController.chooseFile();
                 case "toolbarUndo" -> parent.plainEditorController.ctrl("undo");
                 case "toolbarRedo" -> parent.plainEditorController.ctrl("redo");
                 case "toolbarBold" -> parent.plainEditorController.edit("**");
