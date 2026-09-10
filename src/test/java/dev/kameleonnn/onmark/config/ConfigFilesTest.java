@@ -1,11 +1,10 @@
 package dev.kameleonnn.onmark.config;
 
-import dev.kameleonnn.onmark.Strings;
+import dev.kameleonnn.onmark.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import dev.kameleonnn.onmark.config.Config;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 /**
  *
  * @author kameleonnn
@@ -13,22 +12,22 @@ import java.nio.file.Paths;
 public class ConfigFilesTest {
    
     @Test
-    public void configDirExists(){
-        String dir = Config.getConfigDir();
+     void configDirExists(){
+        Path dir = Config.getConfigDir();
         Assertions.assertAll("Config dir: ",
-            () -> Assertions.assertTrue(Files.exists(Paths.get(dir))),
-            () -> Assertions.assertTrue(Files.isDirectory(Paths.get(dir)))
+            () -> Assertions.assertTrue(Files.exists(dir)),
+            () -> Assertions.assertTrue(Files.isDirectory(dir))
         );
     }
     
     @Test
-    public void configFilesExist(){
-        String dir = Config.getConfigDir() + System.getProperty("file.separator");
+     void configFilesExist(){
+        Path dir = Config.getConfigDir();
         Config.createConfigFiles();
         Assertions.assertAll( "Config files: ",
-                () -> Assertions.assertTrue(Files.isRegularFile(Paths.get(dir+Strings.CONFIG_FILE.text))),
-                () ->Assertions.assertTrue(Files.isRegularFile(Paths.get(dir+Strings.CONFIG_RECENTS.text))),
-                () -> Assertions.assertTrue(Files.isDirectory(Paths.get(dir+Strings.CONFIG_USER_THEMES.text))));
+                () -> Assertions.assertTrue(Files.isRegularFile(dir.resolve(Strings.CONFIG_FILE.text))),
+                () ->Assertions.assertTrue(Files.isRegularFile(dir.resolve(Strings.CONFIG_RECENTS.text))),
+                () -> Assertions.assertTrue(Files.isDirectory(dir.resolve(Strings.CONFIG_USER_THEMES.text))));
     }
     
 }
