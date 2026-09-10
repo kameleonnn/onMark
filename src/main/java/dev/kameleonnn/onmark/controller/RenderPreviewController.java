@@ -1,7 +1,6 @@
 package dev.kameleonnn.onmark.controller;
 
-import dev.kameleonnn.onmark.App;
-import dev.kameleonnn.onmark.highlight.HighlightNodeRenderer;
+import dev.kameleonnn.onmark.markdown.HighlightNodeRenderer;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,6 +17,7 @@ import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.task.list.items.TaskListItemsExtension;
 import org.commonmark.ext.ins.InsExtension;
 import org.commonmark.renderer.html.HtmlNodeRendererContext;
+import dev.kameleonnn.onmark.util.UtilsUI;
 
 /**
  * FXML Controller class
@@ -50,7 +50,7 @@ public class RenderPreviewController implements Initializable {
 
         engine.locationProperty().addListener((ObservableValue<? extends String> observable, String oldVal, String newVal) -> {
             if(!engine.getLocation().equals("")){
-                App.openLink(engine.getLocation());
+                UtilsUI.openLink(engine.getLocation());
                 MDtoHTML();
             }
         });

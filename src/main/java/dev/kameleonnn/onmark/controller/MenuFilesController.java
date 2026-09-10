@@ -1,8 +1,9 @@
 package dev.kameleonnn.onmark.controller;
 
 import dev.kameleonnn.onmark.App;
-import dev.kameleonnn.onmark.FileRW;
-import dev.kameleonnn.onmark.Strings;
+import dev.kameleonnn.onmark.AppState;
+import dev.kameleonnn.onmark.util.FileRW;
+import dev.kameleonnn.onmark.util.Strings;
 import dev.kameleonnn.onmark.config.Recents;
 import java.io.File;
 import java.net.URL;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
+import dev.kameleonnn.onmark.util.UtilsUI;
 
 /**
  * FXML Controller class
@@ -72,8 +74,8 @@ public class MenuFilesController implements Initializable {
                     saveInNewFile();
                 }
                 case "menuAppClose" -> {
-                    App.saveCheck();
-                    if (App.saved) {
+                    UtilsUI.saveCheck();
+                    if (AppState.isSaved()) {
                         App.close();
                     }
                 }
@@ -93,13 +95,13 @@ public class MenuFilesController implements Initializable {
     }
 
     public void closeFile() {
-        App.saveCheck();
-        if (App.saved) {
+        UtilsUI.saveCheck();
+        if (AppState.isSaved()) {
             // TODO
             FileRW.closeFile();
             Recents.changeRecents();
             parent.plainEditorController.clearEditor();
-            App.setWindowTitle("");
+            UtilsUI.setWindowTitle(parent.getRoot(),"");
         }
     }
 
@@ -107,20 +109,21 @@ public class MenuFilesController implements Initializable {
      * opens file and prepares program for use
      */
     public void openFile() {
-        File file = fileChooser.showOpenDialog(App.scene.getWindow());
+        File file = fileChooser.showOpenDialog(parent.getRoot().getScene().getWindow());
         if (file != null) {
-            App.filename = file.getAbsolutePath();
-            if (FileRW.checkIfFileCanOpen(App.filename)) {
-                if ((App.data=FileRW.readFile(App.filename))!=null) {
-                    App.saved=true;
-                    App.setWindowTitle(" - " + App.filename);
+            AppState.setFilename(file.getAbsolutePath());
+            if (FileRW.checkIfFileCanOpen(AppState.getFilename())) {
+                AppState.setData(FileRW.readFile(AppState.getFilename()));
+                if (AppState.getData()!=null) {
+                    AppState.setSaved(true);
+                    UtilsUI.setWindowTitle(parent.getRoot() ," - " + AppState.getFilename());
                     Recents.changeRecents();
                     parent.plainEditorController.loadFileConts();
                 } else {
-                    App.errorAlert(Strings.FILE_LOAD_ERROR.text);
+                    UtilsUI.errorAlert(Strings.FILE_LOAD_ERROR.text);   
                 }
             } else {
-                App.errorAlert(Strings.FILE_OPEN_ERROR.text);
+                UtilsUI.errorAlert(Strings.FILE_OPEN_ERROR.text);
             }
 
         }
@@ -130,16 +133,16 @@ public class MenuFilesController implements Initializable {
      * Saves loaded file
      */
     public void saveFile() {
-        if (App.filename.equals("")) {
+        if (AppState.getFilename().equals("")) {
             fileChooser.setTitle("New file...");
             saveInNewFile();
         } else {
-            if (!FileRW.save(parent.plainEditorController.passText(), App.filename)) {
-                App.saved = false;
-                App.errorAlert(Strings.FILE_SAVE_ERROR.text);
+            if (!FileRW.save(parent.plainEditorController.passText(), AppState.getFilename())) {
+                AppState.setSaved(false);
+                UtilsUI.errorAlert(Strings.FILE_SAVE_ERROR.text);
             } else {
-                App.data = parent.plainEditorController.passText();
-                App.saved = true;
+                AppState.setData(parent.plainEditorController.passText());
+                AppState.setSaved(true);
             }
         }
     }
@@ -148,24 +151,26 @@ public class MenuFilesController implements Initializable {
      * Creates a new file and prepares the editor for use
      */
     public void newFile() {
-        App.saveCheck();
-        if (App.saved) {
+        UtilsUI.saveCheck();
+        if (AppState.isSaved()) {
             parent.plainEditorController.clearEditor();
             FileRW.closeFile();
-            App.setWindowTitle(" - New file");
+            UtilsUI.setWindowTitle(parent.getRoot(), " - New file");
         }
     }
 
     private void saveInNewFile() {
-        fileChooser.setInitialFileName(App.filename);
-        File file = fileChooser.showSaveDialog(App.scene.getWindow());
-        if ((file != null) && (FileRW.save(App.data=parent.plainEditorController.passText(), App.filename=file.getAbsolutePath()+getExtension()))) {
-            App.saved = true;
-            App.setWindowTitle(" - " + App.filename);
+        fileChooser.setInitialFileName(AppState.getFilename());
+        File file = fileChooser.showSaveDialog(parent.getRoot().getScene().getWindow());
+        AppState.setFilename(file.getAbsolutePath()+getExtension());
+        AppState.setData(parent.plainEditorController.passText());
+        if (FileRW.save(AppState.getData(), AppState.getFilename())) {
+            AppState.setSaved(true);
+            UtilsUI.setWindowTitle(parent.getRoot(), " - " + AppState.getFilename());
             Recents.changeRecents();
         } else {
-            App.saved = false;
-            App.errorAlert(Strings.FILE_SAVE_ERROR.text);
+            AppState.setSaved(false);
+            UtilsUI.errorAlert(Strings.FILE_SAVE_ERROR.text);
         }
     }
 

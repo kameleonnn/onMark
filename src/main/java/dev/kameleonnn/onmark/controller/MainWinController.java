@@ -1,7 +1,7 @@
 package dev.kameleonnn.onmark.controller;
 
 import dev.kameleonnn.onmark.App;
-import dev.kameleonnn.onmark.Strings;
+import dev.kameleonnn.onmark.util.Strings;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -9,12 +9,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -23,7 +27,7 @@ import javafx.stage.Stage;
  * @author kameleonnn
  */
 public class MainWinController implements Initializable {
-
+    @FXML private MenuBar menuBar;
     @FXML
     private Menu menuFiles;
     public MenuFilesController menuFilesController;
@@ -31,6 +35,8 @@ public class MainWinController implements Initializable {
     private Menu menuEdit;
     public MenuEditController menuEditController;
     public ToolbarController toolbarController;
+    @FXML
+    private AnchorPane toolbar;
     public PlainEditorController plainEditorController;
     public RenderPreviewController renderPreviewController;
     //@FXML
@@ -60,6 +66,7 @@ public class MainWinController implements Initializable {
     private ScrollPane plainEditor;
     @FXML
     private ScrollPane renderPreview;
+    @FXML private BorderPane root;
 
     /**
      * Initializes the controller class.
@@ -125,6 +132,10 @@ public class MainWinController implements Initializable {
     
     public ScrollPane getRenderPreview(){
         return this.renderPreview;
+    }
+    
+    public Node getRoot(){
+        return root;
     }
 
 }

@@ -1,7 +1,7 @@
 package dev.kameleonnn.onmark.controller;
 
-import dev.kameleonnn.onmark.App;
-import dev.kameleonnn.onmark.Editor;
+import dev.kameleonnn.onmark.AppState;
+import dev.kameleonnn.onmark.markdown.Editor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
@@ -32,8 +32,8 @@ public class PlainEditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupRespSize();
-        textInput.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
-            App.saved = textInput.getText().equals(App.data);
+        textInput.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            AppState.setSaved(textInput.getText().equals(AppState.getData()));
             if (parent.getRenderPreview().isVisible()){
                 parent.renderPreviewController.MDtoHTML();
             }
@@ -140,8 +140,8 @@ public class PlainEditorController implements Initializable {
         if (!textInput.getText().equals("")) {
             textInput.clear();
         }
-        textInput.setText(App.data);
-        App.saved = true;  
+        textInput.setText(AppState.getData());
+        AppState.setSaved(true);
     }
 
     /**
