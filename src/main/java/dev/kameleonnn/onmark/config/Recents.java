@@ -1,6 +1,6 @@
 package dev.kameleonnn.onmark.config;
 
-import dev.kameleonnn.onmark.App;
+import dev.kameleonnn.onmark.AppState;
 
 /**
  *
@@ -25,7 +25,7 @@ public class Recents {
         if (recent[0] != null) {
             System.arraycopy(recent, 0, recent, 1, 19);
         }
-        recent[0] = App.filename;
+        recent[0] = AppState.getFilename();
     }
     
     // when saving recents -> turn them all into one string, use string builder
