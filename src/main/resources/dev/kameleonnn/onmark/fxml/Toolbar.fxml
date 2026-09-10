@@ -8,8 +8,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="toolbar" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.ToolbarController">
-    <ToolBar prefHeight="30.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+<AnchorPane fx:id="toolbar" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.ToolbarController">
+    <ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
           <Button fx:id="toolbarFileSave" contentDisplay="GRAPHIC_ONLY" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Save">
                <graphic>

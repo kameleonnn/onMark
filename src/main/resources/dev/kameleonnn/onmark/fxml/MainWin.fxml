@@ -7,75 +7,90 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="350.0" minWidth="400.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.MainWinController">
-   <children>
-      <MenuBar prefHeight="27.0" prefWidth="807.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <menus>
-            <fx:include fx:id="menuFiles" source="MenuFiles.fxml" />
-            <fx:include fx:id="menuEdit" source="MenuEdit.fxml" />
-            <Menu fx:id="menuView" mnemonicParsing="false" text="View">
-               <items>
-                  <CheckMenuItem id="viewEditor" fx:id="menuViewEditor" mnemonicParsing="false" selected="true" text="Show editor" />
-                  <CheckMenuItem id="viewPreview" fx:id="menuViewPreview" mnemonicParsing="false" selected="true" text="Show preview" />
-               </items></Menu>
-            <Menu fx:id="menuSettings" mnemonicParsing="false" text="onMark">
-               <items>
-                  <MenuItem fx:id="menuOpenSettings" mnemonicParsing="false" text="Settings">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0">
-                           <image>
-                              <Image url="@../icons/settings-icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></MenuItem>
-                  <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
-                  <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                      <MenuItem fx:id="menuOpenManual" mnemonicParsing="false" text="Introduction">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0">
-                                 <image>
-                                    <Image url="@../icons/manual-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></MenuItem>
-                        <MenuItem fx:id="menuBugreportCB" mnemonicParsing="false" text="Report a Bug (Codeberg)">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0">
-                                 <image>
-                                    <Image url="@../icons/report-codeberg-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></MenuItem>
-                        <MenuItem fx:id="menuBugreportGH" mnemonicParsing="false" text="Report a Bug (Github)">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0">
-                                 <image>
-                                    <Image url="@../icons/report-github-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic></MenuItem>
-                    </items>
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="17.0">
-                           <image>
-                              <Image url="@../icons/help-icon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Menu>
-               </items></Menu>
-         </menus>
-      </MenuBar>
-      <fx:include fx:id="toolbar" source="Toolbar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
-      <SplitPane fx:id="splitView" dividerPositions="0.5" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.kameleonnn.onmark.controller.MainWinController">
+   <bottom>
+      <fx:include fx:id="bottomBar" source="BottomBar.fxml" />
+   </bottom>
+   <center>
+      <SplitPane fx:id="splitView" dividerPositions="0.5" prefHeight="600.0" prefWidth="800.0">
          <items>
             <fx:include fx:id="plainEditor" source="PlainEditor.fxml" />
             <fx:include fx:id="renderPreview" source="RenderPreview.fxml" />
          </items>
       </SplitPane>
-      <fx:include fx:id="bottomBar" source="BottomBar.fxml" />
-   </children>
-</AnchorPane>
+   </center>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar fx:id="menuBar" prefHeight="27.0" prefWidth="807.0">
+               <menus>
+                  <fx:include fx:id="menuFiles" source="MenuFiles.fxml" />
+                  <fx:include fx:id="menuEdit" source="MenuEdit.fxml" />
+                  <Menu fx:id="menuView" mnemonicParsing="false" text="View">
+                     <items>
+                        <CheckMenuItem id="viewEditor" fx:id="menuViewEditor" mnemonicParsing="false" selected="true" text="Show editor" />
+                        <CheckMenuItem id="viewPreview" fx:id="menuViewPreview" mnemonicParsing="false" selected="true" text="Show preview" />
+                     </items>
+                  </Menu>
+                  <Menu fx:id="menuSettings" mnemonicParsing="false" text="onMark">
+                     <items>
+                        <MenuItem fx:id="menuOpenSettings" mnemonicParsing="false" text="Settings">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0">
+                                 <image>
+                                    <Image url="@../icons/settings-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
+                        <Menu mnemonicParsing="false" text="Help">
+                           <items>
+                              <MenuItem fx:id="menuOpenManual" mnemonicParsing="false" text="Introduction">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0">
+                                       <image>
+                                          <Image url="@../icons/manual-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem fx:id="menuBugreportCB" mnemonicParsing="false" text="Report a Bug (Codeberg)">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0">
+                                       <image>
+                                          <Image url="@../icons/report-codeberg-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem fx:id="menuBugreportGH" mnemonicParsing="false" text="Report a Bug (Github)">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0">
+                                       <image>
+                                          <Image url="@../icons/report-github-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                           <graphic>
+                              <ImageView fitHeight="17.0" fitWidth="17.0">
+                                 <image>
+                                    <Image url="@../icons/help-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Menu>
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <fx:include fx:id="toolbar" source="Toolbar.fxml" />
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
