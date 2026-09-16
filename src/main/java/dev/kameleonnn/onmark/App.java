@@ -52,7 +52,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("onMark");
         stage.show();
-        stage.setOnCloseRequest((event) -> {
+        stage.setOnCloseRequest(event -> {
             if (!UtilsUI.saveCheck()) {
                 event.consume();
             }

@@ -32,8 +32,14 @@ public class Recents {
     }
     
     private static void readRecents(){
-        String[] read = FileRW.readFile(Config.getConfigDir().resolve(Strings.CONFIG_RECENTS.text).toString()).split(System.lineSeparator());
-        recent.addAll(Arrays.asList(read));
+        List<String> read = new ArrayList<>(
+                Arrays.asList(
+                        FileRW.readFile(Config.getConfigDir().resolve(Strings.CONFIG_RECENTS.text)
+                        .toString()).split(System.lineSeparator())));
+        read.removeAll(Arrays.asList("", null));
+        if(!read.isEmpty()){
+            recent.addAll(read);
+        }
 
     }
 
